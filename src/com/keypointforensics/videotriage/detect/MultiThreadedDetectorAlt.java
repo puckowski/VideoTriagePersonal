@@ -10,6 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 public class MultiThreadedDetectorAlt extends DetectorAlt {
 
+	protected static final int MINIMUM_DENSITY_THRESHOLD = -20;
+	protected static final int MAXIMUM_DENSITY_THRESHOLD = 60000;
+	
 	private final int NUMBER_OF_CPU_CORES;
 
 	public MultiThreadedDetectorAlt(final int numberOfCpuCores, HaarCascade haarCascade, float baseScale,
@@ -42,7 +45,7 @@ public class MultiThreadedDetectorAlt extends DetectorAlt {
 									- cannyIntegral[i_f + scaledFeatureWidth + (j) * width];
 							final int densityValue = edges_density / scaledFeatureWidth / scaledFeatureWidth;
 							
-							if (densityValue < -20 || densityValue > 60000) {
+							if (densityValue < MINIMUM_DENSITY_THRESHOLD || densityValue > MAXIMUM_DENSITY_THRESHOLD) {
 								continue;
 							}
 
@@ -65,7 +68,6 @@ public class MultiThreadedDetectorAlt extends DetectorAlt {
 		try {
 			threadPool.awaitTermination(60, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

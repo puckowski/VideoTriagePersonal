@@ -15,9 +15,9 @@ public class Utils {
 	 */
 	
 	public static final String SOFTWARE_NAME           = "Video Triage";
-	public static final String SOFTWARE_VERSION        = "0.8.1.2";
-	public static final String SOFTWARE_VERSION_NUMBER = "5630";
-	public static final String SOFTWARE_DATE_STAMP     = "2022-11-27";
+	public static final String SOFTWARE_VERSION        = "0.8.1.4";
+	public static final String SOFTWARE_VERSION_NUMBER = "5642";
+	public static final String SOFTWARE_DATE_STAMP     = "2022-11-30";
 	public static final String AUTHOR_NAME             = "Keypoint Forensics LLC";
 	
 	public static final String DEFAULT_DATE_FORMAT           = "MM-dd-yyyy HH-mm-ss";

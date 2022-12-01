@@ -39,7 +39,7 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 	 */
 	private static final long serialVersionUID = -7874245682392760248L;
 	
-	protected static final int FACE_BLUR_CONVOLUTION_COUNT = 8;
+	protected static final int FACE_BLUR_CONVOLUTION_COUNT = 12;
 	
 	public static final boolean SCALE_TO_FIT_ENABLED  = true;
 	public static final boolean SCALE_TO_FIT_DISABLED = false;

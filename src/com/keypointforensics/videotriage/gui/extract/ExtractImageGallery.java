@@ -66,6 +66,9 @@ public class ExtractImageGallery extends JFrame {
 	 */
 	protected static final long serialVersionUID = 232646536271988938L;
 
+	protected static final int DETECTION_ROLLING_FRAME_COUNT = 3;
+	protected static final int DETECTION_ROLLING_FRAME_THRESHOLD = 2;
+	
 	private final String REMOVE_REDACTION_TEXT = "Remove Redaction";
 	private final String REMOVING_REDACTION_TEXT = "Removing Redaction";
 
@@ -1251,14 +1254,14 @@ public class ExtractImageGallery extends JFrame {
 	private boolean isNearValue(int value, int compare, double percentDifference) {
 		int low = (int) ((1.0 - percentDifference) * value);
 		int high = (int) ((1.0 + percentDifference) * value);
-		
+
 		if (compare >= low && compare <= high) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public void performAutomaticVideoRedactionWithoutMergeAction() {
 		if (imgPaths.isEmpty() == true) {
 			return;
@@ -1273,7 +1276,7 @@ public class ExtractImageGallery extends JFrame {
 
 		String pathToDraw;
 
-		ArrayList<ArrayList<Rectangle>> rollingMatchList = new ArrayList<>();
+		final ArrayList<ArrayList<Rectangle>> rollingMatchList = new ArrayList<>();
 		
 		for (currentIndex = 0; currentIndex < imgPaths.size(); ++currentIndex) {
 			pathToDraw = imgPaths.get(currentIndex);
@@ -1287,44 +1290,14 @@ public class ExtractImageGallery extends JFrame {
 			ArrayList<Rectangle> faceRectangles = mHaarDetector.performSearch(CascadeUtils.HAAR_CASCADE_FACE_DEFAULT,
 					allCapturePaths);
 			
-			if (rollingMatchList.size() < 3) {
+			if (rollingMatchList.size() < DETECTION_ROLLING_FRAME_COUNT) {
 				rollingMatchList.add(faceRectangles);
 			} else {
 				rollingMatchList.remove(0);
 				rollingMatchList.add(faceRectangles);
 			}
 			
-			if (rollingMatchList.size() == 3) {
-				for (int rectIndex = 0; rectIndex < faceRectangles.size(); ++rectIndex) {
-					int matchCount = 0;
-					final Rectangle rect = faceRectangles.get(rectIndex);
-					
-					for (int compareIndex = 0; compareIndex < rollingMatchList.size(); ++compareIndex) {
-						ArrayList<Rectangle> compareList = rollingMatchList.get(compareIndex);
-						
-						for (int compareRectIndex = 0; compareRectIndex < compareList.size(); ++compareRectIndex) {
-							if (isNearValue(rect.x, compareList.get(compareRectIndex).x, 0.10)) {
-								matchCount++;
-								
-								break;
-							}
-						}
-						
-						if (compareList.isEmpty()) {
-							matchCount++;
-						}
-						
-						if (matchCount >= 2) {
-							break;
-						}
-					}
-					
-					if (matchCount < 2) {
-						faceRectangles.remove(rectIndex);
-						rectIndex--;
-					}
-				}
-			}
+			removeInconsistentDetectionRectangles(rollingMatchList, faceRectangles);
 
 			mImagePanel.setHasFinishedPaint(false);
 			mImagePanel.addRedactionRectangles(faceRectangles);
@@ -1349,6 +1322,41 @@ public class ExtractImageGallery extends JFrame {
 		refresh();
 
 		mRedactingVideo = false;
+	}
+
+	private void removeInconsistentDetectionRectangles(final ArrayList<ArrayList<Rectangle>> rollingMatchList,
+			final ArrayList<Rectangle> faceRectangles) {
+		if (rollingMatchList.size() == DETECTION_ROLLING_FRAME_COUNT) {
+			for (int rectIndex = 0; rectIndex < faceRectangles.size(); ++rectIndex) {
+				int matchCount = 0;
+				final Rectangle rect = faceRectangles.get(rectIndex);
+
+				for (int compareIndex = 0; compareIndex < rollingMatchList.size(); ++compareIndex) {
+					ArrayList<Rectangle> compareList = rollingMatchList.get(compareIndex);
+
+					for (int compareRectIndex = 0; compareRectIndex < compareList.size(); ++compareRectIndex) {
+						if (isNearValue(rect.x, compareList.get(compareRectIndex).x, 0.10)) {
+							matchCount++;
+
+							break;
+						}
+					}
+
+					if (compareList.isEmpty()) {
+						matchCount++;
+					}
+
+					if (matchCount >= DETECTION_ROLLING_FRAME_THRESHOLD) {
+						break;
+					}
+				}
+
+				if (matchCount < DETECTION_ROLLING_FRAME_THRESHOLD) {
+					faceRectangles.remove(rectIndex);
+					rectIndex--;
+				}
+			}
+		}
 	}
 
 	public void performAutomaticVideoRedactionAction() {
@@ -1396,10 +1404,27 @@ public class ExtractImageGallery extends JFrame {
 		String pathToDraw;
 		String redactedFilename;
 
-		String redactedImageSuffix = "_" + FileUtils.getShortFilename(mPath);
+		final String shortPathFilename = FileUtils.getShortFilename(mPath);
+		
+		Integer targetFramesPerSecond = null;
+		
+		if (shortPathFilename.contains("video_frames_")) {
+			String framesPerSecondString = shortPathFilename.substring(shortPathFilename.indexOf("video_frames_") + 13);
+			framesPerSecondString = framesPerSecondString.substring(0, framesPerSecondString.indexOf("_"));
+			
+			try {
+				targetFramesPerSecond = Integer.parseInt(framesPerSecondString);
+			} catch (final NumberFormatException numberFormatException) {
+				// Do nothing, leave target frames per second null
+			}
+		}
+		
+		String redactedImageSuffix = "_" + shortPathFilename;
 		redactedImageSuffix = redactedImageSuffix.substring(0, redactedImageSuffix.lastIndexOf("."));
 		redactedImageSuffix += ".jpg";
 		redactedImageSuffix = redactedImageSuffix.replace(" ", "");
+
+		final ArrayList<ArrayList<Rectangle>> rollingMatchList = new ArrayList<>();
 
 		for (currentIndex = 0; currentIndex < imgPaths.size(); ++currentIndex) {
 			pathToDraw = imgPaths.get(currentIndex);
@@ -1409,12 +1434,20 @@ public class ExtractImageGallery extends JFrame {
 
 			faceRectangles = mHaarDetector.performSearch(CascadeUtils.HAAR_CASCADE_FACE_DEFAULT, allCapturePaths);
 
+			if (rollingMatchList.size() < DETECTION_ROLLING_FRAME_COUNT) {
+				rollingMatchList.add(faceRectangles);
+			} else {
+				rollingMatchList.remove(0);
+				rollingMatchList.add(faceRectangles);
+			}
+			
+			removeInconsistentDetectionRectangles(rollingMatchList, faceRectangles);
+			
 			mImagePanel.setHasFinishedPaint(false);
 			mImagePanel.addRedactionRectangles(faceRectangles);
 
 			while (mImagePanel.hasFinishedPaint() == false) {
-				// Thread.yield();
-				break;
+			    Thread.yield();
 			}
 
 			redactedFilename = FileUtils.REDACT_DIRECTORY + String.format("%05d", currentIndex) + redactedImageSuffix;
@@ -1441,7 +1474,7 @@ public class ExtractImageGallery extends JFrame {
 		WindowsRedactedImagesToVideoProcess windowsRedactedImagesToVideoProcess = new WindowsRedactedImagesToVideoProcess();
 
 		try {
-			windowsRedactedImagesToVideoProcess.apply("%05d" + redactedImageSuffix, redactedVideoFilename,
+			windowsRedactedImagesToVideoProcess.apply("%05d" + redactedImageSuffix, redactedVideoFilename, targetFramesPerSecond,
 					redactionProgressBundle);
 
 			CaseMetadataWriter.writeNewRedactedSourceToContext(mContextFilename, redactedVideoFilename);
@@ -1535,7 +1568,22 @@ public class ExtractImageGallery extends JFrame {
 		String redactedFilename;
 		// String pathToDraw;
 
-		String redactedImageSuffix = "_" + FileUtils.getShortFilename(mPath);
+		final String shortPathFilename = FileUtils.getShortFilename(mPath);
+		
+		Integer targetFramesPerSecond = null;
+		
+		if (shortPathFilename.contains("video_frames_")) {
+			String framesPerSecondString = shortPathFilename.substring(shortPathFilename.indexOf("video_frames_") + 13);
+			framesPerSecondString = framesPerSecondString.substring(0, framesPerSecondString.indexOf("_"));
+			
+			try {
+				targetFramesPerSecond = Integer.parseInt(framesPerSecondString);
+			} catch (final NumberFormatException numberFormatException) {
+				// Do nothing, leave target frames per second null
+			}
+		}
+		
+		String redactedImageSuffix = "_" + shortPathFilename;
 		redactedImageSuffix = redactedImageSuffix.substring(0, redactedImageSuffix.lastIndexOf("."));
 		redactedImageSuffix += ".jpg";
 		redactedImageSuffix = redactedImageSuffix.replace(" ", "");
@@ -1565,7 +1613,7 @@ public class ExtractImageGallery extends JFrame {
 		WindowsRedactedImagesToVideoProcess windowsRedactedImagesToVideoProcess = new WindowsRedactedImagesToVideoProcess();
 
 		try {
-			windowsRedactedImagesToVideoProcess.apply("%05d" + redactedImageSuffix, redactedVideoFilename,
+			windowsRedactedImagesToVideoProcess.apply("%05d" + redactedImageSuffix, redactedVideoFilename, targetFramesPerSecond,
 					redactionProgressBundle);
 
 			CaseMetadataWriter.writeNewRedactedSourceToContext(mContextFilename, redactedVideoFilename);
