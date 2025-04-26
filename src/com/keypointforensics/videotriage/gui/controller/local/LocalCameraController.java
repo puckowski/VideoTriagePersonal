@@ -606,7 +606,7 @@ public class LocalCameraController extends CameraController implements ActionLis
 				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set background threshold " + mBackgroundThresholdSlider.getValue());
 				mBackgroundParams.setThreshold(mBackgroundThresholdSlider.getValue());
 			} else if(slider == mBlobExpansionPercentSlider) {
-				final int expansionPercent = (int) (mBlobExpansionPercentSlider.getValue() / 100.0);
+				final double expansionPercent = (mBlobExpansionPercentSlider.getValue() / 100.0);
 				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set expansion percent " + expansionPercent);
 				mBlobParams.setExpansionPercent(expansionPercent);
 			} else if(slider == mCaptureEntropyFilterSlider) {

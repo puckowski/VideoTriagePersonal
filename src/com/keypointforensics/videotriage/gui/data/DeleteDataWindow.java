@@ -254,6 +254,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 					mReportExtractsCheckBox.setSelected(true);
 					mRedactCheckBox.setSelected(true);
 					mMergedCheckBox.setSelected(true);
+					mAuditCheckBox.setSelected(true);
 					mNotesCheckBox.setSelected(true);
 				} else if(mAllCheckBox.isSelected() == false) {
 					//mLogCheckBox.setSelected(false);
@@ -272,6 +273,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 					mReportExtractsCheckBox.setSelected(false);
 					mRedactCheckBox.setSelected(false);
 					mMergedCheckBox.setSelected(false);
+					mAuditCheckBox.setSelected(false);
 					mNotesCheckBox.setSelected(false);
 				}
 			}

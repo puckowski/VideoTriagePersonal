@@ -569,7 +569,7 @@ public class RemoteCameraController extends CameraController implements CameraCo
 				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set background threshold " + mBackgroundThresholdSlider.getValue());
 				mBackgroundParams.setThreshold(mBackgroundThresholdSlider.getValue());
 			} else if(slider == mBlobExpansionPercentSlider) {
-				final int expansionPercent = (int) (mBlobExpansionPercentSlider.getValue() / 100.0);
+				final double expansionPercent = (mBlobExpansionPercentSlider.getValue() / 100.0);
 				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set expansion percent " + expansionPercent);
 				mBlobParams.setExpansionPercent(expansionPercent);
 			}

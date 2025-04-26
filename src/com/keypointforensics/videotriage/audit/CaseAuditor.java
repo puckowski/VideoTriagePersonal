@@ -69,6 +69,12 @@ public class CaseAuditor {
             throw new IllegalStateException("Case log path is not set.");
         }
 
+        if (filename == null || filename.isEmpty()) {
+            log(level, text);
+
+            return;
+        }
+
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String logEntry = "[" + timestamp + "] [" + level + "][ " + filename + "] " + text;
 
