@@ -6,11 +6,7 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 
 import com.keypointforensics.videotriage.gui.imagepanel.ScalableSimpleImagePanel;
@@ -72,12 +68,22 @@ public class FileListCellRenderer extends DefaultListCellRenderer {
 		        	label.setIcon(new ImageIcon(ImageUtils.getScaledImageWithAspectRatio(previewBufferedImage, 100, 50)));
 		        	label.setPreferredSize(new Dimension(200, 50));
 		        }
-		        else { 
-		        	label.setIcon(fileSystemView.getSystemIcon(file));
+		        else {
+					final Icon icon = fileSystemView.getSystemIcon(file);
+					if (icon != null) {
+						label.setIcon(icon);
+					} else {
+						label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+					}
 		        }
 	        }
 	        else {
-	        	label.setIcon(fileSystemView.getSystemIcon(file));
+				final Icon icon = fileSystemView.getSystemIcon(file);
+				if (icon != null) {
+					label.setIcon(icon);
+				} else {
+					label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+				}
 	        }
 	        
 	        label.setText(file.getAbsolutePath());

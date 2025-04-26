@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 
 public class ZipFileListCellRenderer extends DefaultListCellRenderer {
@@ -48,8 +45,13 @@ public class ZipFileListCellRenderer extends DefaultListCellRenderer {
     	}
     	else if(value instanceof File) {
 	        File file = (File) value;
-	        
-	        label.setIcon(fileSystemView.getSystemIcon(file));    
+
+			final Icon icon = fileSystemView.getSystemIcon(file);
+			if (icon != null) {
+				label.setIcon(icon);
+			} else {
+				label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+			}
 	        label.setText(file.getAbsolutePath());
 	        label.setToolTipText(file.getName());
 	
