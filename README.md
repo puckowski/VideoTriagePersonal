@@ -8,8 +8,4 @@ Video Triage is an advanced video analytics application that reduces hours of vi
 
 Video Triage is also available for download as a portable Windows application from Google Drive at the following links:
 
-Windows 64-bit download:
-- https://drive.google.com/open?id=1JmkCBJa6vQvn8UwXFgiB7roIu0_OhR2H
-
-Windows 32-bit download:
-- https://drive.google.com/open?id=18T6SAnntBrHuG7H_YOSB7Env0HDCXTW-
+https://keypointforensics.us
