@@ -31,6 +31,8 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.keypointforensics.videotriage.audit.CaseAuditor;
+import com.keypointforensics.videotriage.audit.LogLevel;
 import com.keypointforensics.videotriage.gui.imagepanel.ScalableSimpleImagePanel;
 import com.keypointforensics.videotriage.gui.main.FileSelectVideoPreviewAccessory;
 import com.keypointforensics.videotriage.gui.main.GuiMain;
@@ -375,6 +377,7 @@ public class LocalFileWizardWindow extends JFrame implements ChangeListener, Act
 
 		if (slider == mFramesPerSecondSlider
 				&& !slider.getValueIsAdjusting()) {
+			CaseAuditor.log(LogLevel.INFO, "Frames per second target " + mFramesPerSecondSlider.getValue());
 			LocalFileRuntimeParams.setGlobalFramesPerSecondTarget(mFramesPerSecondSlider.getValue());
 		} else if (slider == mNumberOfMonitorsSlider
 				&& !slider.getValueIsAdjusting()) {
@@ -525,7 +528,7 @@ public class LocalFileWizardWindow extends JFrame implements ChangeListener, Act
 					public void run() {
 						ThreadUtils.addThreadToHandleList("LocFileWizWindow About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n� " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

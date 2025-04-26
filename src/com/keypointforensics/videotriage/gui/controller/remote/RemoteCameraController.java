@@ -28,6 +28,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
+import com.keypointforensics.videotriage.audit.CaseAuditor;
+import com.keypointforensics.videotriage.audit.LogLevel;
 import com.keypointforensics.videotriage.blob.context.BlobContextList;
 import com.keypointforensics.videotriage.casestore.CaseMetadataWriter;
 import com.keypointforensics.videotriage.gui.imagepanel.VideoFeedImagePanel;
@@ -535,6 +537,7 @@ public class RemoteCameraController extends CameraController implements CameraCo
 				}
 			}
 			else if (comboBox == mBlobBorderColorCombo) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set border color " + BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
 				mBlobParams.setBorderColor(BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
 			}
 		}
@@ -554,15 +557,21 @@ public class RemoteCameraController extends CameraController implements CameraCo
 				mGraphicsPanel.setRotateDegrees(mRotateDegrees);
 				mPreviewPanel.setRotateDegrees(mRotateDegrees);
 			} else if(slider == mMassThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set mass threshold " + mMassThresholdSlider.getValue());
 				mMassParams.setThreshold(mMassThresholdSlider.getValue());
 			} else if(slider == mBackgroundThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set background threshold " + mBackgroundThresholdSlider.getValue());
 				mBackgroundParams.setThreshold(mBackgroundThresholdSlider.getValue());
 			} else if(slider == mMassConsiderationThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set consideration threshold " + mMassConsiderationThresholdSlider.getValue());
 				mMassParams.setConsiderationThreshold(mMassConsiderationThresholdSlider.getValue());
 			} else if(slider == mBackgroundThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set background threshold " + mBackgroundThresholdSlider.getValue());
 				mBackgroundParams.setThreshold(mBackgroundThresholdSlider.getValue());
 			} else if(slider == mBlobExpansionPercentSlider) {
-				mBlobParams.setExpansionPercent((int) (mBlobExpansionPercentSlider.getValue() / 100.0));
+				final int expansionPercent = (int) (mBlobExpansionPercentSlider.getValue() / 100.0);
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set expansion percent " + expansionPercent);
+				mBlobParams.setExpansionPercent(expansionPercent);
 			}
 		}	
 	}
@@ -573,22 +582,31 @@ public class RemoteCameraController extends CameraController implements CameraCo
 			JCheckBox checkBox = (JCheckBox) event.getSource();
 
 			if(checkBox == mBlobBorderCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set border display " + mBlobBorderCheckBox.isSelected());
 				mBlobParams.setBorderDisplay(mBlobBorderCheckBox.isSelected());
 			} else if(checkBox == mStatusBarEnabledCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set status bar enabled " + mStatusBarEnabledCheckBox.isSelected());
 				mStatusBarParams.setEnabled(mStatusBarEnabledCheckBox.isSelected());
 			} else if(checkBox == mAttemptToMergeCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set attempt to merge " + mAttemptToMergeCheckBox.isSelected());
 				mBlobParams.setAttemptToMerge(mAttemptToMergeCheckBox.isSelected());
 			} else if(checkBox == mHighlightBlobsCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set highlight blobs " + mHighlightBlobsCheckBox.isSelected());
 				mBlobParams.setHighlightBlobs(mHighlightBlobsCheckBox.isSelected());
 			} else if(checkBox == mWriteCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set write state " + mWriteCheckBox.isSelected());
 				mWriteParams.setWriteState(mWriteCheckBox.isSelected());
 			} else if(checkBox == mAutoUpdateCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set auto update " + mAutoUpdateCheckBox.isSelected());
 				mBackgroundParams.setAutoUpdate(mAutoUpdateCheckBox.isSelected());
 			} else if(checkBox == mDrawOnSourceCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set draw on source " + mDrawOnSourceCheckBox.isSelected());
 				mSourceParams.setDrawOnSourceEnabled(mDrawOnSourceCheckBox.isSelected());
 			} else if(checkBox == mExpandBlobsCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set expand blobs " + mExpandBlobsCheckBox.isSelected());
 				mBlobParams.setExpandBlobs(mExpandBlobsCheckBox.isSelected());
 			} else if(checkBox == mRecordCoordinatesCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set record coordinates " + mRecordCoordinatesCheckBox.isSelected());
 				mBlobParams.setSaveBlobCoordintates(mRecordCoordinatesCheckBox.isSelected());
 			}
 		}

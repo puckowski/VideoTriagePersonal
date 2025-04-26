@@ -137,6 +137,11 @@ public class SimpleDeleteDataThread extends Thread {
 	
 		deleteProgressBundle.progressBar.setValue(deleteProgressBundle.progressBar.getValue() + 1);
 		deleteProgressBundle.progressBar.repaint();
+
+		FileUtils.deleteDirectoryContents(new File(FileUtils.AUDIT_DIRECTORY), true);
+
+		deleteProgressBundle.progressBar.setValue(deleteProgressBundle.progressBar.getValue() + 1);
+		deleteProgressBundle.progressBar.repaint();
 		deleteProgressBundle.frame.dispose();
 						
 		ThreadUtils.removeThreadFromHandleList(this);

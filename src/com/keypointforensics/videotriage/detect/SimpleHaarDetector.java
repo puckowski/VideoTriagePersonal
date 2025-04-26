@@ -82,7 +82,7 @@ public class SimpleHaarDetector {
 		//BufferedImage searchImage;
 		
 		cascade = HaarCascade.create(FileUtils.CASCADES_DIRECTORY + haarCascade);	
-		detector = new MultiThreadedDetectorAlt(mNumberOfCpuCores, cascade, 1f, 1.1f, 0.05f); // 1f, 1.25f, 0.1f);
+		detector = new MultiThreadedDetectorAlt(mNumberOfCpuCores, cascade, 1f, 1.25f, 0.1f);
 		
 		for(String capturePath : allCapturePaths) {	
 			//searchImage = ImageUtils.loadBufferedImage(capturePath);

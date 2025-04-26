@@ -15,10 +15,10 @@ public class Utils {
 	 */
 	
 	public static final String SOFTWARE_NAME           = "Video Triage";
-	public static final String SOFTWARE_VERSION        = "0.8.1.5";
-	public static final String SOFTWARE_VERSION_NUMBER = "5649";
-	public static final String SOFTWARE_DATE_STAMP     = "2022-12-17";
-	public static final String AUTHOR_NAME             = "Keypoint Forensics LLC";
+	public static final String SOFTWARE_VERSION        = "0.8.2.0";
+	public static final String SOFTWARE_VERSION_NUMBER = "5645";
+	public static final String SOFTWARE_DATE_STAMP     = "2025-04-26";
+	public static final String AUTHOR_NAME             = "Daniel Puckowski";
 	
 	public static final String DEFAULT_DATE_FORMAT           = "MM-dd-yyyy HH-mm-ss";
 	public static final String REPORT_DATE_FORMAT            = "MM/dd/yyyy";

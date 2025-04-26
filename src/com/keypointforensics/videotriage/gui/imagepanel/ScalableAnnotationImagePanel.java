@@ -22,11 +22,10 @@ import javax.swing.SwingUtilities;
 
 import com.keypointforensics.videotriage.gui.extract.ConvolveWithEdgeOp;
 import com.keypointforensics.videotriage.gui.extract.ExtractImageGallery;
+import com.keypointforensics.videotriage.lang.Pair;
 import com.keypointforensics.videotriage.util.DimenUtils;
 import com.keypointforensics.videotriage.util.ImageUtils;
 import com.keypointforensics.videotriage.util.KernelUtils;
-
-import javafx.util.Pair;
 
 public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 
@@ -39,7 +38,7 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 	 */
 	private static final long serialVersionUID = -7874245682392760248L;
 	
-	protected static final int FACE_BLUR_CONVOLUTION_COUNT = 12;
+	protected static final int FACE_BLUR_CONVOLUTION_COUNT = 8;
 	
 	public static final boolean SCALE_TO_FIT_ENABLED  = true;
 	public static final boolean SCALE_TO_FIT_DISABLED = false;

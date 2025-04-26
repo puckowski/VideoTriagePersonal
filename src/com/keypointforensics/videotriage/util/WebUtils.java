@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class WebUtils {
 
-	public static final String URL_STRING_DOCUMENTATION = "https://keypointforensics.us/documentation/";
+	public static final String URL_STRING_DOCUMENTATION = "https://keypointforensics.blogspot.com/";
 	
 	public static ArrayList<String> downloadTextFromUrl(final String urlText, final int initArraySize) throws IOException {
 		URL url = new URL(urlText);

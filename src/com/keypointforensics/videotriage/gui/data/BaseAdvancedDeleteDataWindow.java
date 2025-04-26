@@ -123,6 +123,7 @@ public class BaseAdvancedDeleteDataWindow extends JFrame {
 		allFiles.addAll(FileUtilsLegacy.parseDirectoryRecursiveForAll(FileUtils.REDACT_DIRECTORY));
 		allFiles.addAll(FileUtilsLegacy.parseDirectoryRecursiveForAll(FileUtils.MERGED_DIRECTORY));
 		allFiles.addAll(FileUtilsLegacy.parseDirectoryRecursiveForAll(FileUtils.NOTES_DIRECTORY));
+		allFiles.addAll(FileUtilsLegacy.parseDirectoryRecursiveForAll(FileUtilsLegacy.AUDIT_DIRECTORY));
 		
 		//ProgressBundle deleteProgressBundle = ProgressUtils.getProgressBundle("Deleting Data...", allFiles.size() + 1);
 		deleteProgressBundle.progressBar.setIndeterminate(true);

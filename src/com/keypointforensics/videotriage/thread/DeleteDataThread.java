@@ -43,12 +43,14 @@ public class DeleteDataThread extends Thread {
 	private final JCheckBox REDACT_CHECK_BOX;
 	private final JCheckBox MERGED_CHECK_BOX;
 	private final JCheckBox NOTES_CHECK_BOX;
-	
+	private final JCheckBox AUDIT_CHECK_BOX;
+
 	public DeleteDataThread(final GuiMain guiMain, final DeleteDataWindow deleteDataWindow, final JCheckBox imagesCheckBox, 
 			final JCheckBox databasesCheckBox, final JCheckBox enhancedCheckBox, final JCheckBox exportsCheckBox, 
 			final JCheckBox extractsCheckBox, final JCheckBox detectionsCheckBox, final JCheckBox filteredCheckBox, final JCheckBox temporaryCheckBox,
 			final JCheckBox reportsCheckBox, final JCheckBox processingCheckBox, final JCheckBox previewCheckBox, final JCheckBox resizedCheckBox,
-			final JCheckBox reportExtractsCheckBox, final JCheckBox redactCheckBox, final JCheckBox mergedCheckBox, final JCheckBox notesCheckBox) {
+			final JCheckBox reportExtractsCheckBox, final JCheckBox redactCheckBox, final JCheckBox mergedCheckBox, final JCheckBox notesCheckBox,
+							final JCheckBox auditCheckBox) {
 		GUI_MAIN                  = guiMain;
 		DELETE_DATA_WINDOW        = deleteDataWindow;
 		//LOG_CHECK_BOX             = logCheckBox;
@@ -68,6 +70,7 @@ public class DeleteDataThread extends Thread {
 		REDACT_CHECK_BOX          = redactCheckBox;
 		MERGED_CHECK_BOX          = mergedCheckBox;
 		NOTES_CHECK_BOX           = notesCheckBox;
+		AUDIT_CHECK_BOX           = auditCheckBox;
 	}
 	
 	@Override
@@ -216,6 +219,13 @@ public class DeleteDataThread extends Thread {
 		
 		if(NOTES_CHECK_BOX.isSelected() == true) {
 			final boolean success = FileUtils.deleteDirectoryContents(new File(FileUtils.NOTES_DIRECTORY), true);
+		}
+
+		deleteProgressBundle.progressBar.setValue(deleteProgressBundle.progressBar.getValue() + 1);
+		deleteProgressBundle.progressBar.repaint();
+
+		if(AUDIT_CHECK_BOX.isSelected() == true) {
+			final boolean success = FileUtils.deleteDirectoryContents(new File(FileUtils.AUDIT_DIRECTORY), true);
 		}
 		
 		deleteProgressBundle.progressBar.setValue(deleteProgressBundle.progressBar.getValue() + 1);

@@ -43,7 +43,8 @@ public class CaseDialogDeleteDataThread extends Thread {
 	private final JCheckBox REDACT_CHECK_BOX;
 	private final JCheckBox MERGED_CHECK_BOX;
 	private final JCheckBox NOTES_CHECK_BOX;
-	
+	private final JCheckBox AUDIT_CHECK_BOX;
+
 	private volatile boolean mDone;
 	
 	private ProgressBundle mDeleteProgressBundle;
@@ -54,7 +55,7 @@ public class CaseDialogDeleteDataThread extends Thread {
 			final JCheckBox extractsCheckBox, final JCheckBox detectionsCheckBox, final JCheckBox filteredCheckBox, final JCheckBox temporaryCheckBox,
 			final JCheckBox reportsCheckBox, final JCheckBox processingCheckBox, final JCheckBox previewCheckBox, 
 			final JCheckBox resizedCheckBox, final JCheckBox reportExtractsCheckBox, final JCheckBox redactCheckBox, final JCheckBox mergedCheckBox,
-			final JCheckBox notesCheckBox, final ProgressBundle deleteProgressBundle) {
+			final JCheckBox notesCheckBox, final JCheckBox auditCheckBox, final ProgressBundle deleteProgressBundle) {
 		DELETE_DATA_WINDOW        = caseDialogDeleteDataWindow;
 		SELECT_CASE_DIALOG        = selectCaseDialog;
 		//LOG_CHECK_BOX             = logCheckBox;
@@ -74,6 +75,7 @@ public class CaseDialogDeleteDataThread extends Thread {
 		REDACT_CHECK_BOX          = redactCheckBox;
 		MERGED_CHECK_BOX          = mergedCheckBox;
 		NOTES_CHECK_BOX           = notesCheckBox;
+		AUDIT_CHECK_BOX           = auditCheckBox;
 		
 		mDeleteProgressBundle = deleteProgressBundle;
 		
@@ -228,6 +230,13 @@ public class CaseDialogDeleteDataThread extends Thread {
 		
 		if(NOTES_CHECK_BOX.isSelected() == true) {
 			final boolean success = FileUtils.deleteDirectoryContents(new File(FileUtils.NOTES_DIRECTORY), true);
+		}
+
+		mDeleteProgressBundle.progressBar.setValue(mDeleteProgressBundle.progressBar.getValue() + 1);
+		mDeleteProgressBundle.progressBar.repaint();
+
+		if(AUDIT_CHECK_BOX.isSelected() == true) {
+			final boolean success = FileUtils.deleteDirectoryContents(new File(FileUtils.AUDIT_DIRECTORY), true);
 		}
 		
 		SwingUtilities.invokeLater(new Runnable() {

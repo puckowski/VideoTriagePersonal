@@ -1,14 +1,7 @@
 package com.keypointforensics.videotriage.chart;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.stream.Collectors;
-
-import com.keypointforensics.videotriage.util.Utils;
 
 public class TimeSeriesScatterChartBuilder extends VideoTriageChartBuilder {
 	
@@ -148,8 +141,6 @@ public class TimeSeriesScatterChartBuilder extends VideoTriageChartBuilder {
 	}
 	
 	public void build(boolean isReportPaginated) {	
-		mEventTimeline = (ArrayList<String>) ChartEventTimelineUtils.sortEventTimeline(mEventTimeline);
-		
 		for(int i = 0; i < mEventTimeline.size(); ++i) {
 			appendTimeEvent(mEventTimeline.get(i));
 		}

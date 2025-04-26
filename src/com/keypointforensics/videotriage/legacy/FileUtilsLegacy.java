@@ -33,7 +33,10 @@ public class FileUtilsLegacy {
 	
 	public static final String TEMPORARY_DIRECTORY = FileUtils.RESOURCES_DIRECTORY
 			+ "temporary" + File.separatorChar;
-	
+
+	public static final String AUDIT_DIRECTORY = FileUtils.RESOURCES_DIRECTORY
+			+ "audit" + File.separatorChar;
+
 	public synchronized static boolean isFileExist(final String absoluteFilePath) {
 		File file = new File(absoluteFilePath);
 

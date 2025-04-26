@@ -46,7 +46,7 @@ public class LocalCameraControllerPreferencesWindow extends CameraControllerPref
 		buildMenuBar();
 		
 		LOCAL_CAMERA_CONTROLLER = new LocalCameraController(null, null, null, null);
-		JScrollPane leftScrollPane = LOCAL_CAMERA_CONTROLLER.createLeftScrollPane(9);
+		JScrollPane leftScrollPane = LOCAL_CAMERA_CONTROLLER.createLeftScrollPane(10);
 		getContentPanel().add(leftScrollPane, BorderLayout.CENTER);
 		
 		JButton savePreferencesButton = new JButton("Save Preferences");
@@ -198,7 +198,7 @@ public class LocalCameraControllerPreferencesWindow extends CameraControllerPref
 					public void run() {
 						ThreadUtils.addThreadToHandleList("LocCamPrefWindow About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n� " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

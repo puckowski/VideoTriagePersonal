@@ -24,6 +24,7 @@ import com.keypointforensics.videotriage.gui.main.GuiMain;
 import com.keypointforensics.videotriage.thread.DeleteDataThread;
 import com.keypointforensics.videotriage.util.BorderUtils;
 import com.keypointforensics.videotriage.util.FileUtils;
+import com.keypointforensics.videotriage.util.LicenseUtils;
 import com.keypointforensics.videotriage.util.ThreadUtils;
 import com.keypointforensics.videotriage.util.Utils;
 import com.keypointforensics.videotriage.util.WebUtils;
@@ -43,7 +44,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 	 */
 	private static final long serialVersionUID = -5468066048459750354L;
 	
-	private static final int    CONTROL_GRID_LAYOUT_ROWS     = 18;
+	private static final int    CONTROL_GRID_LAYOUT_ROWS     = 19;
 	private static final int    CONTROL_GRID_LAYOUT_COLUMNS  = 1;
 	
 	private final GuiMain GUI_MAIN;
@@ -65,6 +66,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 	private JCheckBox mRedactCheckBox;
 	private JCheckBox mMergedCheckBox;
 	private JCheckBox mNotesCheckBox;
+	private JCheckBox mAuditCheckBox;
 	private JCheckBox mAllCheckBox;
 	private JButton   mDeleteButton;
 	
@@ -155,7 +157,11 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 		mNotesCheckBox = new JCheckBox("Delete Note Files");
 		mNotesCheckBox.setSelected(false);
 		mNotesCheckBox.addItemListener(this);
-		
+
+		mAuditCheckBox = new JCheckBox("Delete Audit Files");
+		mAuditCheckBox.setSelected(false);
+		mAuditCheckBox.addItemListener(this);
+
 		mAllCheckBox = new JCheckBox("Delete Everything");
 		mAllCheckBox.setSelected(false);
 		mAllCheckBox.addItemListener(this);
@@ -180,6 +186,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 		checkBoxPanel.add(mRedactCheckBox);
 		checkBoxPanel.add(mMergedCheckBox);
 		checkBoxPanel.add(mNotesCheckBox);
+		checkBoxPanel.add(mAuditCheckBox);
 		checkBoxPanel.add(mAllCheckBox);
 		checkBoxPanel.add(mDeleteButton);
 		
@@ -287,7 +294,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 						mDatabaseCheckBox, mEnhancedCheckBox, mExportsCheckBox, mExtractsCheckBox, 
 						mDetectionsCheckBox, mFilteredCheckBox, mTemporaryCheckBox, mReportsCheckBox, 
 						mProcessingCheckBox, mPreviewCheckBox, mResizedCheckBox, mReportExtractsCheckBox, 
-						mRedactCheckBox, mMergedCheckBox, mNotesCheckBox);
+						mRedactCheckBox, mMergedCheckBox, mNotesCheckBox, mAuditCheckBox);
 				deleteDataThread.start();
 			} 
 		}
@@ -346,6 +353,19 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 		});
 		menu.add(menuItem);
 		
+		menu = new JMenu("Data");
+		menuBar.add(menu);
+		
+		menuItem = new JMenuItem("Delete License Data");
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {	
+				FileUtils.deleteFile(new File(LicenseUtils.LICENSE_KEY_FILENAME));
+			}
+			
+		});
+		menu.add(menuItem);
+		
 		menu = new JMenu("Help");
 		menuBar.add(menu);
 		
@@ -381,7 +401,7 @@ public class DeleteDataWindow extends JFrame implements ItemListener, ActionList
 					public void run() {
 						ThreadUtils.addThreadToHandleList("DeleteData About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n� " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

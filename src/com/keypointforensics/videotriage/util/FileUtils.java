@@ -46,6 +46,7 @@ public class FileUtils {
 	public static final String MERGED_DIRECTORY          = RESOURCES_DIRECTORY + "merged" + File.separatorChar;
 	public static final String NOTES_DIRECTORY           = RESOURCES_DIRECTORY + "notes" + File.separatorChar;
 	public static final String EXPORTS_DIRECTORY         = RESOURCES_DIRECTORY + "exports" + File.separatorChar;
+	public static final String AUDIT_DIRECTORY         = RESOURCES_DIRECTORY + "audit" + File.separatorChar;
 
 	public static final String REPORT_EXTRACTS_TEMPORARY_DIRECTORY = REPORT_EXTRACTS_DIRECTORY + "temporary" + File.separatorChar;
 		

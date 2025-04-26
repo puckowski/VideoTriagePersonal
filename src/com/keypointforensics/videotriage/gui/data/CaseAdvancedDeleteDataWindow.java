@@ -22,6 +22,7 @@ import com.keypointforensics.videotriage.gui.main.SelectCaseDialog;
 import com.keypointforensics.videotriage.util.BorderUtils;
 import com.keypointforensics.videotriage.util.CursorUtils;
 import com.keypointforensics.videotriage.util.FileUtils;
+import com.keypointforensics.videotriage.util.LicenseUtils;
 import com.keypointforensics.videotriage.util.ThreadUtils;
 import com.keypointforensics.videotriage.util.Utils;
 import com.keypointforensics.videotriage.util.WebUtils;
@@ -156,6 +157,18 @@ public class CaseAdvancedDeleteDataWindow extends BaseAdvancedDeleteDataWindow i
 		});
 		menu.add(menuItem);
 		
+		menu = new JMenu("Data");
+		menuBar.add(menu);
+		
+		menuItem = new JMenuItem("Delete License Data");
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {	
+				FileUtils.deleteFile(new File(LicenseUtils.LICENSE_KEY_FILENAME));
+			}		
+		});
+		menu.add(menuItem);
+		
 		menu = new JMenu("Help");
 		menuBar.add(menu);
 		
@@ -191,7 +204,7 @@ public class CaseAdvancedDeleteDataWindow extends BaseAdvancedDeleteDataWindow i
 					public void run() {
 						ThreadUtils.addThreadToHandleList("CaseAdvancedDeleteData About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\nÂ© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

@@ -37,6 +37,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.keypointforensics.videotriage.audit.AuditLogWindow;
+import com.keypointforensics.videotriage.audit.CaseAuditor;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
 import com.keypointforensics.videotriage.blob.context.BlobContextList;
@@ -146,9 +148,15 @@ public class GuiMain extends JFrame {
 		BLOB_CONTEXT_LIST = new BlobContextList(databaseNamePath, dbNameFmt);
 		
 		createContextFilename();
+		prepareAuditor();
 		buildFrame();
 	}
-	
+
+	private void prepareAuditor() {
+		final String caseLogPath = FileUtils.AUDIT_DIRECTORY + FileUtils.getShortFilename(DATABASE_NAME);
+		CaseAuditor.setCaseLogPath(caseLogPath);
+	}
+
 	private void createContextFilename() {
 		mContextFilename = FileUtils.CONTEXT_DIRECTORY; 
 		
@@ -1344,7 +1352,55 @@ public class GuiMain extends JFrame {
 			}
 		});
 		menu.add(menuItem);
-		
+
+		menu = new JMenu("Audit");
+		menuBar.add(menu);
+
+		menuItem = new JMenuItem("Open Audit Log");
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new Thread() {
+					@Override
+					public void run() {
+						ThreadUtils.addThreadToHandleList("AuditLogWindow OpenLog", this);
+
+						AuditLogWindow auditLogWindow = new AuditLogWindow();
+						auditLogWindow.buildAndDisplay();
+
+						ThreadUtils.removeThreadFromHandleList(this);
+					}
+				}.start();
+			}
+
+		});
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem("Open Audit Folder");
+		menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				new Thread() {
+					@Override
+					public void run() {
+						ThreadUtils.addThreadToHandleList("GuiMain OpenAudit", this);
+
+						final File file = new File(FileUtils.AUDIT_DIRECTORY + FileUtils.getShortFilename(DATABASE_NAME));
+						final Desktop desktop = Desktop.getDesktop();
+
+						try {
+							desktop.browse(file.toURI());
+						} catch (IOException ioException) {
+
+						}
+
+						ThreadUtils.removeThreadFromHandleList(this);
+					}
+				}.start();
+			}
+		});
+		menu.add(menuItem);
+
 		menu = new JMenu("Help");
 		menuBar.add(menu);
 		
@@ -1380,7 +1436,7 @@ public class GuiMain extends JFrame {
 					public void run() {
 						ThreadUtils.addThreadToHandleList("GuiMain About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n� " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

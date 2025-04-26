@@ -208,7 +208,7 @@ public class LocalEvidenceMetadataWindow extends JFrame implements ActionListene
 					public void run() {
 						ThreadUtils.addThreadToHandleList("EvidenceMetadata About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\nÂ© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
 						
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

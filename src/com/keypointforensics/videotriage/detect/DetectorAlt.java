@@ -90,14 +90,18 @@ public abstract class DetectorAlt {
 
 	final float increment;
 
-	final CannyPruner cannyPruner;
+	// final CannyPruner cannyPruner;
 
 	DetectorAlt(HaarCascade _haarCascade, float _baseScale, float _scale_inc, float _increment) {
 		haarCascade = _haarCascade;
 		baseScale = _baseScale;
 		scale_inc = _scale_inc;
 		increment = _increment;
-		cannyPruner = new CannyPruner();
+
+		/*
+		 * if (_doCannyPruning) { cannyPruner = new CannyPruner(); } else { cannyPruner
+		 * = null; }
+		 */
 	}
 
 	/**
@@ -211,6 +215,11 @@ public abstract class DetectorAlt {
 				}
 			}
 		}
+
+		/*
+		 * final int[] cannyIntegral = (cannyPruner == null) ? null :
+		 * cannyPruner.getIntegralCanny(weightedGrayImageSquared, width, height);
+		 */
 
 		final List<Rectangle> ret = getFeatures(width, height, maxScale, weightedGrayImage, weightedGrayImageSquared);
 

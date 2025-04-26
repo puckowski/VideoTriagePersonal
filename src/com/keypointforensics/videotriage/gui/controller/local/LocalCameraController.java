@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.keypointforensics.videotriage.audit.CaseAuditor;
+import com.keypointforensics.videotriage.audit.LogLevel;
 import com.keypointforensics.videotriage.blob.context.BlobContextList;
 import com.keypointforensics.videotriage.casestore.CaseMetadataWriter;
 import com.keypointforensics.videotriage.gui.imagepanel.VideoFeedImagePanel;
@@ -125,7 +127,7 @@ public class LocalCameraController extends CameraController implements ActionLis
 	private JSlider                 mMassConsiderationThresholdSlider;
 	private JSlider                 mBlobExpansionPercentSlider;
 	private JSlider                 mCaptureEntropyFilterSlider;
-	
+	private JCheckBox               mAuditEnabledCheckBox;
 	private JCheckBox               mBlobBorderCheckBox;
 	private JCheckBox               mStatusBarEnabledCheckBox;
 	private JCheckBox               mAttemptToMergeCheckBox;
@@ -305,6 +307,9 @@ public class LocalCameraController extends CameraController implements ActionLis
 		mExhaustiveSearchCheckBox = new JCheckBox("Exhaustive Search Enabled");
 		mExhaustiveSearchCheckBox.setSelected(mSourceParams.getExhaustiveSearchEnabled());
 		mExhaustiveSearchCheckBox.addItemListener(this);
+		mAuditEnabledCheckBox = new JCheckBox("Enable Audit Logging");
+		mAuditEnabledCheckBox.setSelected(CaseAuditor.isEnabled());
+		mAuditEnabledCheckBox.addItemListener(this);
 		
 		mRecordCoordinatesCheckBox = new JCheckBox("Record Coordinates");
 		mRecordCoordinatesCheckBox.setSelected(mBlobParams.getSaveBlobCoordinates());
@@ -386,6 +391,7 @@ public class LocalCameraController extends CameraController implements ActionLis
 		advancedPanel.add(mMassConsiderationThresholdSlider);
 		advancedPanel.add(backgroundThresholdLabel);
 		advancedPanel.add(mBackgroundThresholdSlider);
+		advancedPanel.add(mAuditEnabledCheckBox);
 		//advancedPanel.add(captureEntropyFilterLabel);
 		//advancedPanel.add(mCaptureEntropyFilterSlider);
 		advancedPanel.setBorder(BorderUtils.getEmptyBorder());
@@ -472,6 +478,7 @@ public class LocalCameraController extends CameraController implements ActionLis
 		advancedPanel.add(mBackgroundThresholdSlider);
 		advancedPanel.add(captureEntropyFilterLabel);
 		advancedPanel.add(mCaptureEntropyFilterSlider);
+		advancedPanel.add(mAuditEnabledCheckBox);
 		advancedPanel.setBorder(BorderUtils.getEmptyBorder());
 		
 		leftPanel.addTab("General", null, mGeneralPanel, "Standard tracking configuration");
@@ -566,9 +573,11 @@ public class LocalCameraController extends CameraController implements ActionLis
 			JComboBox<?> comboBox = (JComboBox<?>) event.getSource();
 			
 			if (comboBox == mBlobBorderColorCombo) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set border color " + BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
 				mBlobParams.setBorderColor(BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
 			}
 			else if(comboBox == mVideoCreationDateCombo) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set date creation mode " + VIDEO_CREATION_DATE_OPTIONS[mVideoCreationDateCombo.getSelectedIndex()]);
 				mMetadataParams.setDateCreationMode(VIDEO_CREATION_DATE_OPTIONS[mVideoCreationDateCombo.getSelectedIndex()]);
 			}
 		}
@@ -588,14 +597,20 @@ public class LocalCameraController extends CameraController implements ActionLis
 				mGraphicsPanel.setRotateDegrees(mRotateDegrees);
 				mPreviewPanel.setRotateDegrees(mRotateDegrees);
 			} else if(slider == mMassThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set mass threshold " + mMassThresholdSlider.getValue());
 				mMassParams.setThreshold(mMassThresholdSlider.getValue());
 			} else if(slider == mMassConsiderationThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set consideration threshold " + mMassConsiderationThresholdSlider.getValue());
 				mMassParams.setConsiderationThreshold(mMassConsiderationThresholdSlider.getValue());
 			} else if(slider == mBackgroundThresholdSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set background threshold " + mBackgroundThresholdSlider.getValue());
 				mBackgroundParams.setThreshold(mBackgroundThresholdSlider.getValue());
 			} else if(slider == mBlobExpansionPercentSlider) {
-				mBlobParams.setExpansionPercent((int) (mBlobExpansionPercentSlider.getValue() / 100.0));
+				final int expansionPercent = (int) (mBlobExpansionPercentSlider.getValue() / 100.0);
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set expansion percent " + expansionPercent);
+				mBlobParams.setExpansionPercent(expansionPercent);
 			} else if(slider == mCaptureEntropyFilterSlider) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set entropy threshold " + mCaptureEntropyFilterSlider.getValue());
 				mWriteParams.setEntropyThreshold(mCaptureEntropyFilterSlider.getValue());
 			}
 		}	
@@ -607,14 +622,19 @@ public class LocalCameraController extends CameraController implements ActionLis
 			JCheckBox checkBox = (JCheckBox) event.getSource();
 
 			if(checkBox == mBlobBorderCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set border display " + mBlobBorderCheckBox.isSelected());
 				mBlobParams.setBorderDisplay(mBlobBorderCheckBox.isSelected());
 			} else if(checkBox == mStatusBarEnabledCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set status bar enabled " + mStatusBarEnabledCheckBox.isSelected());
 				mStatusBarParams.setEnabled(mStatusBarEnabledCheckBox.isSelected());
 			} else if(checkBox == mAttemptToMergeCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set attempt to merge " + mAttemptToMergeCheckBox.isSelected());
 				mBlobParams.setAttemptToMerge(mAttemptToMergeCheckBox.isSelected());
 			} else if(checkBox == mHighlightBlobsCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set highlight blobs " + mHighlightBlobsCheckBox.isSelected());
 				mBlobParams.setHighlightBlobs(mHighlightBlobsCheckBox.isSelected());
 			} else if(checkBox == mWriteCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set write state " + mWriteCheckBox.isSelected());
 				mWriteParams.setWriteState(mWriteCheckBox.isSelected());
 				
 				if(mWriteCheckBox.isSelected() == false) {
@@ -623,10 +643,13 @@ public class LocalCameraController extends CameraController implements ActionLis
 					mRecordCoordinatesCheckBox.setEnabled(true);
 				}
 			} else if(checkBox == mAutoUpdateCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set auto update " + mAutoUpdateCheckBox.isSelected());
 				mBackgroundParams.setAutoUpdate(mAutoUpdateCheckBox.isSelected());
 			} else if(checkBox == mDrawOnSourceCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set draw on source " + mDrawOnSourceCheckBox.isSelected());
 				mSourceParams.setDrawOnSourceEnabled(mDrawOnSourceCheckBox.isSelected());
 			} else if(checkBox == mExpandBlobsCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set expand blobs " + mExpandBlobsCheckBox.isSelected());
 				mBlobParams.setExpandBlobs(mExpandBlobsCheckBox.isSelected());
 				
 				if(mExpandBlobsCheckBox.isSelected() == false) {
@@ -634,11 +657,16 @@ public class LocalCameraController extends CameraController implements ActionLis
 				} else {
 					mBlobExpansionPercentSlider.setEnabled(true);
 				}
+			} else if (checkBox == mAuditEnabledCheckBox) {
+				CaseAuditor.setEnabled(mAuditEnabledCheckBox.isSelected());
 			} else if(checkBox == mEntropyFilterCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set entropy filter state " + mEntropyFilterCheckBox.isSelected());
 				mWriteParams.setEntropyFilterState(mEntropyFilterCheckBox.isSelected());
 			} else if(checkBox == mExhaustiveSearchCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set exhaustive search " + mExhaustiveSearchCheckBox.isSelected());
 				mSourceParams.setExhaustiveSearchEnabled(mExhaustiveSearchCheckBox.isSelected());
 			} else if(checkBox == mRecordCoordinatesCheckBox) {
+				CaseAuditor.log(LogLevel.INFO, mLocalFileField.getText(), "Set record coordinates " + mRecordCoordinatesCheckBox.isSelected());
 				mBlobParams.setSaveBlobCoordintates(mRecordCoordinatesCheckBox.isSelected());
 			}
 		}
