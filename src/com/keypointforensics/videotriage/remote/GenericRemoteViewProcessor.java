@@ -19,6 +19,8 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamDevice;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
 import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
+import com.keypointforensics.videotriage.audit.CaseAuditor;
+import com.keypointforensics.videotriage.audit.LogLevel;
 import com.keypointforensics.videotriage.blob.RemoteBlobDetectionThread;
 import com.keypointforensics.videotriage.blob.context.BlobContextList;
 import com.keypointforensics.videotriage.gui.imagepanel.VideoFeedImagePanel;
@@ -30,10 +32,7 @@ import com.keypointforensics.videotriage.network.NetworkStatusThread;
 import com.keypointforensics.videotriage.pool.SilentRejectedExecutionHandler;
 import com.keypointforensics.videotriage.statusbar.StatusBar;
 import com.keypointforensics.videotriage.statusbar.StatusBarBundle;
-import com.keypointforensics.videotriage.util.ColorUtils;
-import com.keypointforensics.videotriage.util.ImageUtils;
-import com.keypointforensics.videotriage.util.SystemUtils;
-import com.keypointforensics.videotriage.util.ThreadUtils;
+import com.keypointforensics.videotriage.util.*;
 
 public class GenericRemoteViewProcessor extends Thread implements RemoteViewProcessor {
 
@@ -214,6 +213,7 @@ public class GenericRemoteViewProcessor extends Thread implements RemoteViewProc
 	
 	@Override
 	public void run() {
+		CaseAuditor.log(LogLevel.INFO, "IP: " + mIp + " URL: " + mRemoteUrlString, "Processing remote resource");
 		ThreadUtils.addThreadToHandleList("GenRem Run", this);
 		
 		//TODO keep?

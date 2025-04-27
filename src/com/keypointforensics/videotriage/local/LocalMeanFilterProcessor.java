@@ -16,6 +16,8 @@ import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
 
+import com.keypointforensics.videotriage.audit.CaseAuditor;
+import com.keypointforensics.videotriage.audit.LogLevel;
 import com.keypointforensics.videotriage.blob.Blob;
 import com.keypointforensics.videotriage.blob.BlobDetectionThread;
 import com.keypointforensics.videotriage.blob.context.BlobContextList;
@@ -27,6 +29,7 @@ import com.keypointforensics.videotriage.processor.BaseProcessor;
 import com.keypointforensics.videotriage.staticparams.LastFrameRuntimeParams;
 import com.keypointforensics.videotriage.thread.ExtractVideoFrameThread;
 import com.keypointforensics.videotriage.util.ColorUtils;
+import com.keypointforensics.videotriage.util.FileUtils;
 import com.keypointforensics.videotriage.util.SystemUtils;
 import com.keypointforensics.videotriage.util.ThreadUtils;
 
@@ -492,7 +495,8 @@ public class LocalMeanFilterProcessor extends BaseProcessor implements LocalView
 	}
 	
 	@Override
-	public void run() {		
+	public void run() {
+		CaseAuditor.log(LogLevel.INFO, FileUtils.getShortFilename(mOriginalVideoFilename), "Processing file");
 		ThreadUtils.addThreadToHandleList("LocMean Run", this);
 		
 		mLastIndexGreaterThanCount = false;
