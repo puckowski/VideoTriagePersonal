@@ -48,4 +48,8 @@ public class ColorUtils {
 		
 		return color;
 	}
+
+	public static String getRgbString(final Color color) {
+		return String.format("r: %d, g: %d, b: %d", color.getRed(), color.getGreen(), color.getBlue());
+	}
 }

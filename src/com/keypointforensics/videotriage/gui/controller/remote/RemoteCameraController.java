@@ -61,6 +61,7 @@ import com.keypointforensics.videotriage.statusbar.StatusBarFactory;
 import com.keypointforensics.videotriage.thread.StopLocalViewThread;
 import com.keypointforensics.videotriage.thread.StopRemoteViewThread;
 import com.keypointforensics.videotriage.util.BorderUtils;
+import com.keypointforensics.videotriage.util.ColorUtils;
 import com.keypointforensics.videotriage.util.WindowUtils;
 
 public class RemoteCameraController extends CameraController implements CameraControllerInterface, ActionListener, ChangeListener, ItemListener {
@@ -537,7 +538,7 @@ public class RemoteCameraController extends CameraController implements CameraCo
 				}
 			}
 			else if (comboBox == mBlobBorderColorCombo) {
-				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set border color " + BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
+				CaseAuditor.log(LogLevel.INFO, mLastIpOrUrlInput, "Set border color " + ColorUtils.getRgbString(BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]));
 				mBlobParams.setBorderColor(BLOB_BORDER_COLOR_OPTIONS[mBlobBorderColorCombo.getSelectedIndex()]);
 			}
 		}
