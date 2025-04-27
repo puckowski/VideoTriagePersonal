@@ -76,7 +76,7 @@ public class CaseAuditor {
         }
 
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        String logEntry = "[" + timestamp + "] [" + level + "][ " + filename + "] " + text;
+        String logEntry = "[" + timestamp + "] [" + level + "][" + filename + "] " + text;
 
         mWriteQueue.offer(logEntry);
     }
