@@ -46,12 +46,17 @@ public class ZipFileListCellRenderer extends DefaultListCellRenderer {
     	else if(value instanceof File) {
 	        File file = (File) value;
 
-			final Icon icon = fileSystemView.getSystemIcon(file);
-			if (icon != null) {
-				label.setIcon(icon);
-			} else {
-				label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+			Icon icon;
+			try {
+				icon = fileSystemView.getSystemIcon(file);
+				if (icon == null) {
+					icon = UIManager.getIcon("FileView.fileIcon");
+				}
+			} catch (Exception e) {
+				icon = UIManager.getIcon("FileView.fileIcon");
 			}
+
+			label.setIcon(icon);
 	        label.setText(file.getAbsolutePath());
 	        label.setToolTipText(file.getName());
 	

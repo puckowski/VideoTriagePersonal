@@ -35,7 +35,6 @@ public class Main {
 			} else {
 				termsVerificationThread.verificationAttempted(true);
 				termsVerificationThread.interrupt();
-				termsVerificationThread.stop();
 			}
 		}
 		

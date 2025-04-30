@@ -48,8 +48,7 @@ public class ThreadUtils {
 			
 			knownThread.interrupt();
 			ThreadUtils.blockThread(DEFAULT_INTERRUPT_BLOCK_MILLIS, "Interrupted thread. Pausing a moment for thread to catch up.");
-			
-			knownThread.stop();
+
 			knownThread = null;
 			
 			currentInterruptIndex++;

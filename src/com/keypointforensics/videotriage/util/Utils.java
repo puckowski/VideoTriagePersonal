@@ -15,8 +15,8 @@ public class Utils {
 	 */
 	
 	public static final String SOFTWARE_NAME           = "Video Triage";
-	public static final String SOFTWARE_VERSION        = "0.8.2.1";
-	public static final String SOFTWARE_VERSION_NUMBER = "5649";
+	public static final String SOFTWARE_VERSION        = "0.8.2.2";
+	public static final String SOFTWARE_VERSION_NUMBER = "5652";
 	public static final String SOFTWARE_DATE_STAMP     = "2025-04-26";
 	public static final String AUTHOR_NAME             = "Daniel Puckowski";
 	

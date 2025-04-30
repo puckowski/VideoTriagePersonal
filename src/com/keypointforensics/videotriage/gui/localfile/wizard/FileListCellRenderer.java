@@ -69,21 +69,31 @@ public class FileListCellRenderer extends DefaultListCellRenderer {
 		        	label.setPreferredSize(new Dimension(200, 50));
 		        }
 		        else {
-					final Icon icon = fileSystemView.getSystemIcon(file);
-					if (icon != null) {
-						label.setIcon(icon);
-					} else {
-						label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+					Icon icon;
+					try {
+						icon = fileSystemView.getSystemIcon(file);
+						if (icon == null) {
+							icon = UIManager.getIcon("FileView.fileIcon");
+						}
+					} catch (Exception e) {
+						icon = UIManager.getIcon("FileView.fileIcon");
 					}
+
+					label.setIcon(icon);
 		        }
 	        }
 	        else {
-				final Icon icon = fileSystemView.getSystemIcon(file);
-				if (icon != null) {
-					label.setIcon(icon);
-				} else {
-					label.setIcon(UIManager.getIcon("FileView.fileIcon"));
+				Icon icon;
+				try {
+					icon = fileSystemView.getSystemIcon(file);
+					if (icon == null) {
+						icon = UIManager.getIcon("FileView.fileIcon");
+					}
+				} catch (Exception e) {
+					icon = UIManager.getIcon("FileView.fileIcon");
 				}
+
+				label.setIcon(icon);
 	        }
 	        
 	        label.setText(file.getAbsolutePath());
