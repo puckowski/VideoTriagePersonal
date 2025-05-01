@@ -162,7 +162,7 @@ public class FileListAutomaticReviewWindow extends JFrame implements ChangeListe
 		closeWindowButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				Utils.displayMessageDialog("Automatic Review", "Click OK to start automatic review of video processing results.");
+				Utils.displayMessageDialog("Automatic Review", "Click Yes to start automatic review of video processing results.");
 				
 				FileListAutomaticReviewWindow.this.dispose();
 				
@@ -391,7 +391,7 @@ public class FileListAutomaticReviewWindow extends JFrame implements ChangeListe
 					public void run() {
 						ThreadUtils.addThreadToHandleList("AutReview About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\nï¿½ " + Utils.AUTHOR_NAME);
 					
 						ThreadUtils.removeThreadFromHandleList(this);
 					}
