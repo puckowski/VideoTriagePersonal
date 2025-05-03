@@ -1760,9 +1760,13 @@ public class GuiMain extends JFrame {
 			//LocalFileRuntimeParams.setGlobalProcessLocalFileThread(null);
 		//}
 		
-		clearProgressBarIfNecessary(controllerId);
+		clearProgressBarIfNecessary(mProgressControllerId);
 		
-		CONTROLLER_REGISTRY.getController(controllerId).stopRemoteCamera();
+		final CameraController cameraController = CONTROLLER_REGISTRY.getController(controllerId);
+
+		if (cameraController != null) {
+			cameraController.stopRemoteCamera();
+		}
 	}
 	
 	public String getContextFilename() {

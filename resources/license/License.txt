@@ -48,12 +48,12 @@ types of Users. If you open a Keypoint Forensics account on behalf of a
 company, organization, or other entity, then (a) "you" includes you and that 
 entity, and (b) you represent and warrant that you are an authorized 
 representative of the entity with the authority to bind the entity to this 
-Agreement, and that you agree to this Agreement on the entityâ€™s behalf. By 
+Agreement, and that you agree to this Agreement on the entity’s behalf. By 
 connecting to Keypoint Forensics with a third-party service, you give us 
 permission to access and use your information from that service as permitted by 
 that service, and to store your log-in credentials for that service.
 
-You may never use another Userâ€™s account without permission. When creating your 
+You may never use another User’s account without permission. When creating your 
 account, you must provide accurate and complete information. You are solely 
 responsible for the activity that occurs on your account, and you must keep 
 your account password secure. We encourage you to use "strong" passwords 
@@ -115,7 +115,7 @@ bound by this Agreement.
 You are solely responsible for your interactions with other Keypoint Forensics 
 Users. We reserve the right, but have no obligation, to monitor disputes 
 between you and other Users. Keypoint Forensics shall have no liability for 
-your interactions with other Users, or for any Userâ€™s action or inaction.
+your interactions with other Users, or for any User’s action or inaction.
 
 2. User Content
 
@@ -143,7 +143,7 @@ or publicity rights, harassing, humiliating to other people (publicly or
 otherwise), libelous, threatening, profane, or otherwise objectionable; (vi) 
 contains any information or content that is illegal (including, without 
 limitation, the disclosure of insider information under securities law or of 
-another partyâ€™s trade secrets); (vii) contains any information or content that 
+another party’s trade secrets); (vii) contains any information or content that 
 you do not have a right to make available under any law or under contractual or 
 fiduciary relationships; or (viii) contains any information or content that you 
 know is not correct and current or (ix) violates any school or other applicable 
@@ -159,7 +159,7 @@ the license granted below. Keypoint Forensics reserves the right, but is not
 obligated, to reject and/or remove any User Content that Keypoint Forensics 
 believes, in its sole discretion, violates these provisions. You understand 
 that publishing your User Content on the Service is not a substitute for 
-registering it with the U.S. Copyright Office, the Writerâ€™s Guild of America, 
+registering it with the U.S. Copyright Office, the Writer’s Guild of America, 
 or any other rights organization.
 
 For the purposes of this Agreement, "Intellectual Property Rights" means all 
@@ -174,11 +174,11 @@ In connection with your User Content, you affirm, represent and warrant the
 following:
 
 A. You have the written consent of each and every identifiable natural person 
-in the User Content to use such personâ€™s name or likeness in the manner 
+in the User Content to use such person’s name or likeness in the manner 
 contemplated by the Service and this Agreement, and each such person has 
 released you from any liability that may arise in relation to such use.
 
-B. Your User Content and Keypoint Forensicsâ€™s use thereof as contemplated by 
+B. Your User Content and Keypoint Forensics’s use thereof as contemplated by 
 this Agreement and the Service will not violate any law or infringe any rights 
 of any third party, including but not limited to any Intellectual Property 
 Rights and privacy rights.
@@ -213,12 +213,12 @@ For all User Content, you hereby grant Keypoint Forensics a license to
 translate, modify (for technical purposes, for example making sure your content 
 is viewable on an iPhone as well as a computer) and reproduce and otherwise act 
 with respect to such User Content, in each case to enable us to operate the 
-Service, as described in more detail below. This is a license only â€“ your 
+Service, as described in more detail below. This is a license only – your 
 ownership in User Content is not affected.
 
 If you store User Content in your own personal Keypoint Forensics account, in a 
 manner that is not viewable or accessible by any other user except you, or use 
-aspects of the Service, such as Keypoint Forensicsâ€™s APIs, that require 
+aspects of the Service, such as Keypoint Forensics’s APIs, that require 
 Keypoint Forensics to access and search your databases of content for specific 
 images (collectively, "Personal User Content"), you grant Keypoint Forensics 
 the license above, as well as a license to access, display, perform, and 
@@ -245,7 +245,7 @@ distribute your Public User Content for the purpose of making that Public User
 Content accessible to all Keypoint Forensics users and providing the Service 
 necessary to do so, as well as all other rights necessary to use and exercise 
 all rights in that Public User Content in connection with the Service and/or 
-otherwise in connection with Keypoint Forensicsâ€™s business for any purpose. 
+otherwise in connection with Keypoint Forensics’s business for any purpose. 
 Also, you grant all other users of the Service a license to access that Public 
 User Content, and to use and exercise all rights in it, as permitted by the 
 functionality of the Service.
@@ -255,7 +255,7 @@ sublicensable, irrevocable, and worldwide, provided that when you delete your
 Keypoint Forensics account, we will stop displaying your User Content (other 
 than Public User Content, which may remain fully available) to other users (if 
 applicable), but you understand and agree that it may not be possible to 
-completely delete that content from Keypoint Forensicsâ€™s records, and that your 
+completely delete that content from Keypoint Forensics’s records, and that your 
 User Content may remain viewable elsewhere to the extent that they were copied 
 or stored by other users.
 
@@ -300,7 +300,7 @@ Certain aspects of the Service may allow you to obtain certain reputational or
 status indicators ("Keypoint Forensics Property"). You understand and agree 
 that regardless of terminology used, Keypoint Forensics Property represents a 
 limited license right governed solely by the terms of this Agreement and 
-available for distribution at Keypoint Forensicsâ€™s sole discretion. Keypoint 
+available for distribution at Keypoint Forensics’s sole discretion. Keypoint 
 Forensics Property is not redeemable for any sum of money or monetary value 
 from Keypoint Forensics at any time. You acknowledge that you do not own the 
 account you use to access the Service, nor do you possess any rights of access 
@@ -311,14 +311,14 @@ Keypoint Forensics has the absolute right to manage, regulate, control, modify
 and/or eliminate Keypoint Forensics Property as it sees fit in its sole 
 discretion, in any general or specific case, and that Keypoint Forensics will 
 have no liability to you based on its exercise of such right. All data on 
-Keypoint Forensicsâ€™s servers are subject to deletion, alteration or transfer. 
+Keypoint Forensics’s servers are subject to deletion, alteration or transfer. 
 NOTWITHSTANDING ANY VALUE ATTRIBUTED TO SUCH DATA BY YOU OR ANY THIRD PARTY, 
 YOU UNDERSTAND AND AGREE THAT ANY DATA, ACCOUNT HISTORY AND ACCOUNT CONTENT 
-RESIDING ON COMPANYâ€™S SERVERS, MAY BE DELETED, ALTERED, MOVED OR TRANSFERRED AT 
-ANY TIME FOR ANY REASON IN COMPANYâ€™S SOLE DISCRETION, WITH OR WITHOUT NOTICE 
+RESIDING ON COMPANY’S SERVERS, MAY BE DELETED, ALTERED, MOVED OR TRANSFERRED AT 
+ANY TIME FOR ANY REASON IN COMPANY’S SOLE DISCRETION, WITH OR WITHOUT NOTICE 
 AND WITH NO LIABILITY OF ANY KIND. COMPANY DOES NOT PROVIDE OR GUARANTEE, AND 
 EXPRESSLY DISCLAIMS, ANY VALUE, CASH OR OTHERWISE, ATTRIBUTED TO ANY DATA 
-RESIDING ON COMPANYâ€™S SERVERS.
+RESIDING ON COMPANY’S SERVERS.
 
 6. Paid Services
 
@@ -371,13 +371,13 @@ information at your own risk.
 
 9. DMCA Notice
 
-Since we respect artist and content owner rights, it is Keypoint Forensicsâ€™s 
+Since we respect artist and content owner rights, it is Keypoint Forensics’s 
 policy to respond to alleged infringement notices that comply with the Digital 
 Millennium Copyright Act of 1998 ("DMCA").
 
 If you believe that your copyrighted work has been copied in a way that 
 constitutes copyright infringement and is accessible via the Service, please 
-notify Keypoint Forensicsâ€™s copyright agent as set forth in the DMCA. For your 
+notify Keypoint Forensics’s copyright agent as set forth in the DMCA. For your 
 complaint to be valid under the DMCA, you must provide the following 
 information in writing:
 
@@ -402,12 +402,12 @@ Email: keypointforensics@gmail.com
 
 UNDER FEDERAL LAW, IF YOU KNOWINGLY MISREPRESENT THAT ONLINE MATERIAL IS 
 INFRINGING, YOU MAY BE SUBJECT TO CRIMINAL PROSECUTION FOR PERJURY AND CIVIL 
-PENALTIES, INCLUDING MONETARY DAMAGES, COURT COSTS, AND ATTORNEYSâ€™ FEES.
+PENALTIES, INCLUDING MONETARY DAMAGES, COURT COSTS, AND ATTORNEYS’ FEES.
 
 Please note that this procedure is exclusively for notifying Keypoint Forensics 
 and its affiliates that your copyrighted material has been infringed. The 
-preceding requirements are intended to comply with Keypoint Forensicsâ€™s rights 
-and obligations under the DMCA, including 17 U.S.C. Â§512(c), but do not 
+preceding requirements are intended to comply with Keypoint Forensics’s rights 
+and obligations under the DMCA, including 17 U.S.C. §512(c), but do not 
 constitute legal advice. It may be advisable to contact an attorney regarding 
 your rights and obligations under the DMCA and other applicable laws.
 
@@ -426,7 +426,7 @@ by Keypoint Forensics. Keypoint Forensics does not endorse or assume any
 responsibility for any such third-party sites, information, materials, 
 products, or services. If you access a third party website from the Service, 
 you do so at your own risk, and you understand that this Agreement and Keypoint 
-Forensicsâ€™s Privacy Policy do not apply to your use of such sites. You 
+Forensics’s Privacy Policy do not apply to your use of such sites. You 
 expressly relieve Keypoint Forensics from any and all liability arising from 
 your use of any third-party website, service, or content. Additionally, your 
 dealings with or participation in promotions of advertisers found on the 
@@ -441,7 +441,7 @@ You agree to defend, indemnify and hold harmless Keypoint Forensics and its
 subsidiaries, agents, licensors, managers, and other affiliated companies, and 
 their employees, contractors, agents, officers and directors, from and against 
 any and all claims, damages, obligations, losses, liabilities, costs or debt, 
-and expenses (including but not limited to attorneyâ€™s fees) arising from: (i) 
+and expenses (including but not limited to attorney’s fees) arising from: (i) 
 your use of and access to the Service, including any data or content 
 transmitted or received by you; (ii) your violation of any term of this 
 Agreement, including without limitation your breach of any of the 
@@ -449,7 +449,7 @@ representations and warranties above; (iii) your violation of any third-party
 right, including without limitation any right of privacy or Intellectual 
 Property Rights; (iv) your violation of any applicable law, rule or regulation; 
 (v) any claim or damages that arise as a result of any of your User Content or 
-any that is submitted via your account; or (vi) any other partyâ€™s access and 
+any that is submitted via your account; or (vi) any other party’s access and 
 use of the Service with your unique username, password or other appropriate 
 security code.
 
@@ -547,7 +547,7 @@ laws principles. The parties acknowledge that this Agreement evidences a
 transaction involving interstate commerce. Notwithstanding the preceding 
 sentences with respect to the substantive law, any arbitration conducted 
 pursuant to the terms of this Agreement shall be governed by the Federal 
-Arbitration Act (9 U.S.C. Â§Â§ 1-16). The application of the United Nations 
+Arbitration Act (9 U.S.C. §§ 1-16). The application of the United Nations 
 Convention on Contracts for the International Sale of Goods is expressly 
 excluded. You agree to submit to the personal jurisdiction of the federal and 
 state courts located in New York City, New York USA for any actions for which 
@@ -577,11 +577,11 @@ C. Class Action/Jury Trial Waiver
 
 WITH RESPECT TO ALL PERSONS AND ENTITIES, REGARDLESS OF WHETHER THEY HAVE 
 OBTAINED OR USED THE SERVICE FOR PERSONAL, COMMERCIAL OR OTHER PURPOSES, ALL 
-CLAIMS MUST BE BROUGHT IN THE PARTIESâ€™ INDIVIDUAL CAPACITY, AND NOT AS A 
+CLAIMS MUST BE BROUGHT IN THE PARTIES’ INDIVIDUAL CAPACITY, AND NOT AS A 
 PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS ACTION, COLLECTIVE ACTION, 
 PRIVATE ATTORNEY GENERAL ACTION OR OTHER REPRESENTATIVE PROCEEDING. THIS WAIVER 
 APPLIES TO CLASS ARBITRATION, AND, UNLESS WE AGREE OTHERWISE, THE ARBITRATOR 
-MAY NOT CONSOLIDATE MORE THAN ONE PERSONâ€™S CLAIMS. YOU AGREE THAT, BY ENTERING 
+MAY NOT CONSOLIDATE MORE THAN ONE PERSON’S CLAIMS. YOU AGREE THAT, BY ENTERING 
 INTO THIS AGREEMENT, YOU AND COMPANY ARE EACH WAIVING THE RIGHT TO A TRIAL BY 
 JURY OR TO PARTICIPATE IN A CLASS ACTION, COLLECTIVE ACTION, PRIVATE ATTORNEY 
 GENERAL ACTION, OR OTHER REPRESENTATIVE PROCEEDING OF ANY KIND.
@@ -609,7 +609,7 @@ provider may apply to email notifications we send to the email address you
 provide us. Keypoint Forensics may, in its sole discretion, modify or update 
 this Agreement from time to time, and so you should review this page 
 periodically. When we change the Agreement in a material manner, we will update 
-the â€˜last modifiedâ€™ date at the bottom of this page. Your continued use of the 
+the ‘last modified’ date at the bottom of this page. Your continued use of the 
 Service after any such change constitutes your acceptance of the new Terms of 
 Use. If you do not agree to any of these terms or any future Terms of Use, do 
 not use or access (or continue to access) the Service.
@@ -629,7 +629,7 @@ shall be unenforceable.
 D. No Waiver
 
 No waiver of any term of this Agreement shall be deemed a further or continuing 
-waiver of such term or any other term, and Keypoint Forensicsâ€™s failure to 
+waiver of such term or any other term, and Keypoint Forensics’s failure to 
 assert any right or provision under this Agreement shall not constitute a 
 waiver of such right or provision.
 
