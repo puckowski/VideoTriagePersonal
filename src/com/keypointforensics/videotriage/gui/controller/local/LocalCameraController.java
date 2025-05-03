@@ -826,6 +826,10 @@ public class LocalCameraController extends CameraController implements ActionLis
 	
 	@Override
 	public void setBlobParams(final BlobRuntimeParams blobParams) {
+		if(blobParams == null) {
+			return;
+		}
+
 		mBlobParams = blobParams;
 	}
 	
