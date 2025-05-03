@@ -457,7 +457,7 @@ public class SimpleReportChartPreferencesWindow extends JFrame implements ItemLi
 					public void run() {
 						ThreadUtils.addThreadToHandleList("ReportChartPref About", this);
 						
-						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
+						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: " + Utils.SOFTWARE_VERSION + "\nÂ© " + Utils.AUTHOR_NAME);
 					
 						ThreadUtils.removeThreadFromHandleList(this);
 					}

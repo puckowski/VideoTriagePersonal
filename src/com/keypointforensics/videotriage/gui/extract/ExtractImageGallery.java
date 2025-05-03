@@ -809,7 +809,7 @@ public class ExtractImageGallery extends JFrame {
 						ThreadUtils.addThreadToHandleList("ExtractImageGallery About", this);
 
 						Utils.displayMessageDialog("About", Utils.SOFTWARE_NAME + " \nVersion: "
-								+ Utils.SOFTWARE_VERSION + "\n� " + Utils.AUTHOR_NAME);
+								+ Utils.SOFTWARE_VERSION + "\n© " + Utils.AUTHOR_NAME);
 
 						ThreadUtils.removeThreadFromHandleList(this);
 					}
