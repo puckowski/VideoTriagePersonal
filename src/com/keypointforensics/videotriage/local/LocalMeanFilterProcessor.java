@@ -248,24 +248,24 @@ public class LocalMeanFilterProcessor extends BaseProcessor implements LocalView
 				try {
 				    t = new Thread() {
 				        @Override
-				        public void run() {	
+				        public void run() {
 				    		ThreadUtils.addThreadToHandleList("LocMean Count", this);
 
-				    		while(Thread.interrupted() == false && currentFileIndex >= mFrameCount 
+				    		while(Thread.interrupted() == false && currentFileIndex >= mFrameCount
 				    			&& ExtractVideoFrameThread.mExtractionSet.contains(absoluteExtractDirectoryString) == true)
 				    		{
 				    			ThreadUtils.blockThread(250, "Brief wait to confirm that there are in fact no more frames to process.");
-								
+
 								mFrameCount = absoluteExtractDirectory.list().length;
-							
+
 								if(currentFileIndex >= mProgressTarget) {
 									mStatusBar.clear(mStatusBarBundle);
-									
-									mGraphicsPanel.clear(); 
-									mPreviewPanel.clear();  
+
+									mGraphicsPanel.clear();
+									mPreviewPanel.clear();
 								}
 				    		}
-				    		
+
 				    		ThreadUtils.removeThreadFromHandleList(this);
 				        }
 				    };
@@ -275,13 +275,10 @@ public class LocalMeanFilterProcessor extends BaseProcessor implements LocalView
 				    f.get(30, TimeUnit.SECONDS); 
 				}
 				catch (final InterruptedException e) {
-
 				}
 				catch (final TimeoutException e) {
-
 				}
 				catch (final ExecutionException e) {
-					
 				}
 				finally {
 					t.interrupt();
@@ -301,6 +298,7 @@ public class LocalMeanFilterProcessor extends BaseProcessor implements LocalView
 		while (Thread.currentThread().isInterrupted() == false && currentFileIndex < mFrameCount && mRunning);
 		
 		mStatusBar.clear(mStatusBarBundle);
+		LastFrameRuntimeParams.lastFrameProcessedMap.remove(mIp);
 		
 		currentImage = null;	
 		mGraphicsPanel.update(currentImage);
