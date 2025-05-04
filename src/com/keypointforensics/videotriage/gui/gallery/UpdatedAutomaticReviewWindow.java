@@ -164,7 +164,7 @@ public class UpdatedAutomaticReviewWindow extends JFrame implements ChangeListen
 		closeWindowButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				final int proceedAutomaticChoice = Utils.displayConfirmDialog("Automatic Review", "Click OK to start automatic review of video processing results.");
+				final int proceedAutomaticChoice = Utils.displayConfirmDialog("Automatic Review", "Click Yes to start automatic review of video processing results.");
 				
 				if(proceedAutomaticChoice == JOptionPane.OK_OPTION) {			
 					UpdatedAutomaticReviewWindow.this.dispose();
