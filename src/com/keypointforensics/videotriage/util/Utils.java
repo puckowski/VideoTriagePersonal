@@ -15,9 +15,9 @@ public class Utils {
 	 */
 	
 	public static final String SOFTWARE_NAME           = "Video Triage";
-	public static final String SOFTWARE_VERSION        = "0.8.2.3";
-	public static final String SOFTWARE_VERSION_NUMBER = "5655";
-	public static final String SOFTWARE_DATE_STAMP     = "2025-05-03";
+	public static final String SOFTWARE_VERSION        = "0.8.3.0";
+	public static final String SOFTWARE_VERSION_NUMBER = "5720";
+	public static final String SOFTWARE_DATE_STAMP     = "2025-05-05";
 	public static final String AUTHOR_NAME             = "Daniel Puckowski";
 	
 	public static final String DEFAULT_DATE_FORMAT           = "MM-dd-yyyy HH-mm-ss";

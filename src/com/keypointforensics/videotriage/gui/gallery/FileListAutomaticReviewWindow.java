@@ -66,7 +66,7 @@ public class FileListAutomaticReviewWindow extends JFrame implements ChangeListe
 		controlsPanel.add(imageSurfThresholdLabel);
 		int sliderMin = 1;
 		int sliderMax = 100;
-		int sliderInit = (int) (videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageSurfSimilarity() * 100.0);
+		int sliderInit = (int) (videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageOrbSimilarity() * 100.0);
 		imageSurfThresholdSlider = new JSlider(JSlider.HORIZONTAL, sliderMin,
 				sliderMax, sliderInit);
 		imageSurfThresholdSlider.addChangeListener(this);
@@ -212,8 +212,8 @@ public class FileListAutomaticReviewWindow extends JFrame implements ChangeListe
 	}
 	
 	private void performResetImageSurfSimilarityAction() {
-		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageSurfThreshold();
-		imageDifferenceThresholdSlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageSurfSimilarity()); 
+		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageOrbThreshold();
+		imageDifferenceThresholdSlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageOrbSimilarity());
 	}
 	
 	private void performResetMinimumImagesAndFalsePositiveAction() {
@@ -244,7 +244,7 @@ public class FileListAutomaticReviewWindow extends JFrame implements ChangeListe
 			else if(slider == imageSurfThresholdSlider) {
 				int imageSurfSimilarityValue = imageSurfThresholdSlider.getValue();
 				
-				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageSurfSimilarity(imageSurfSimilarityValue);
+				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageOrbSimilarity(imageSurfSimilarityValue);
 			}
 		}	
 	}

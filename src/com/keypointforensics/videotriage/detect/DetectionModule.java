@@ -31,7 +31,7 @@ public abstract class DetectionModule {
 		GUI_MAIN      = guiMain;
 		DATABASE_NAME = databaseName;
 		
-		mCustomSimilarityPercent = SimpleFalsePositiveRemover.DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT;
+		mCustomSimilarityPercent = SimpleFalsePositiveRemover.DEFAULT_ORB_MATCH_PERCENT;
 		mPreAnalyzeResults = true;
 		
 		createDetectionDatabaseFolderIfNecessary();

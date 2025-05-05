@@ -21,7 +21,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.keypointforensics.videotriage.legacy.UtilsLegacy;
 import com.keypointforensics.videotriage.legacy.VideoFalsePositiveRemoverByReferenceLegacy;
 import com.keypointforensics.videotriage.util.BorderUtils;
 import com.keypointforensics.videotriage.util.CursorUtils;
@@ -68,7 +67,7 @@ public class UpdatedAutomaticReviewWindow extends JFrame implements ChangeListen
 		controlsPanel.add(imageSurfSimilarityLabel);
 		int sliderMin = 1;
 		int sliderMax = 100;
-		int sliderInit = (int) videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageSurfSimilarity();
+		int sliderInit = (int) videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageOrbSimilarity();
 		imageSurfSimilaritySlider = new JSlider(JSlider.HORIZONTAL, sliderMin,
 				sliderMax, sliderInit);
 		imageSurfSimilaritySlider.addChangeListener(this);
@@ -208,8 +207,8 @@ public class UpdatedAutomaticReviewWindow extends JFrame implements ChangeListen
 	}
 
 	private void performResetImageSurfSimilarityAction() {
-		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageSurfSimilarity();
-		imageSurfSimilaritySlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageSurfSimilarity()); 
+		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageOrbSimilarity();
+		imageSurfSimilaritySlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageOrbSimilarity());
 	}
 	
 	private void performResetImageSimilarityAction() {
@@ -250,7 +249,7 @@ public class UpdatedAutomaticReviewWindow extends JFrame implements ChangeListen
 			else if(slider == imageSurfSimilaritySlider) {
 				int imageSurfSimilarityValue = imageSurfSimilaritySlider.getValue();
 				
-				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageSurfSimilarity(imageSurfSimilarityValue);
+				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageOrbSimilarity(imageSurfSimilarityValue);
 			}
 		}	
 	}

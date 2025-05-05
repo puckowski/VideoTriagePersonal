@@ -3,15 +3,18 @@ package com.keypointforensics.videotriage.detect;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.keypointforensics.videotriage.image.match.SurfComparator;
+import com.keypointforensics.videotriage.image.match.ORBFeatureExtractor;
+import com.keypointforensics.videotriage.image.match.ORBMatcher;
+import com.keypointforensics.videotriage.image.match.OrbKeypoint;
 import com.keypointforensics.videotriage.legacy.FileUtilsLegacy;
 import com.keypointforensics.videotriage.progress.ProgressBundle;
 import com.keypointforensics.videotriage.util.ImageUtils;
 
 public class SimpleFalsePositiveRemover {
 
-	public static final double DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT = 70.0;
+	public static final double DEFAULT_ORB_MATCH_PERCENT = 70.0;
 	
 	public SimpleFalsePositiveRemover() {
 		
@@ -23,8 +26,6 @@ public class SimpleFalsePositiveRemover {
 		BufferedImage originalImage, compareImage;
 		File toDelete;
 		
-		SurfComparator surfComparator = new SurfComparator(false);
-		
 		for(int i = 0; i < filenames.size(); ++i) { 
 			originalImage = ImageUtils.loadBufferedImage(filenames.get(i));
 			
@@ -32,7 +33,11 @@ public class SimpleFalsePositiveRemover {
 				continue;
 			}
 			
-			surfComparator.init(originalImage);
+			if (originalImage == null) {
+				continue;
+			}
+
+			final List<OrbKeypoint> keypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(originalImage));
 			
 			for(int n = i + 1; n < (i + numberOfFilesToProcess) && n < filenames.size(); ++n) {
 				//if(n == i) { 
@@ -45,8 +50,11 @@ public class SimpleFalsePositiveRemover {
 					continue;
 				}
 
+				final List<OrbKeypoint> compareKeypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(compareImage));
+				final List<ORBMatcher.Match> matches = ORBMatcher.match(keypoints, compareKeypoints);
+
 				//TODO const
-				if(surfComparator.compare(compareImage) >= customMatchPercent) {
+				if(((double) matches.size() / (double) keypoints.size()) >= customMatchPercent) {
 					toDelete = new File(filenames.get(n));
 					toDelete.delete();
 					
@@ -86,16 +94,14 @@ public class SimpleFalsePositiveRemover {
 		BufferedImage originalImage, compareImage;
 		File toDelete;
 		
-		SurfComparator surfComparator = new SurfComparator(false);
-		
 		for(int i = 0; i < filenames.size(); ++i) { 
 			originalImage = ImageUtils.loadBufferedImage(filenames.get(i));
 			
 			if(originalImage == null) {
 				continue;
 			}
-			
-			surfComparator.init(originalImage);
+
+			final List<OrbKeypoint> keypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(originalImage));
 			
 			for(int n = i; n < (i + numberOfFilesToProcess) && n < filenames.size(); ++n) {
 				if(n == i) { 
@@ -107,9 +113,12 @@ public class SimpleFalsePositiveRemover {
 				if(compareImage == null) {
 					continue;
 				}
-
+				
+				final List<OrbKeypoint> compareKeypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(compareImage));
+				final List<ORBMatcher.Match> matches = ORBMatcher.match(keypoints, compareKeypoints);
+				
 				//TODO const
-				if(surfComparator.compare(compareImage) >= DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT) {
+				if(((double) matches.size() / (double) keypoints.size()) >= DEFAULT_ORB_MATCH_PERCENT) {
 					toDelete = new File(filenames.get(n));
 					toDelete.delete();
 					

@@ -30,7 +30,7 @@ public abstract class ExtractDetectionModule {
 		DATABASE_NAME     = databaseName;
 		EXTRACT_DIRECTORY = extractDirectory;
 		
-		mCustomSimilarityPercent = SimpleFalsePositiveRemover.DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT;
+		mCustomSimilarityPercent = SimpleFalsePositiveRemover.DEFAULT_ORB_MATCH_PERCENT;
 		mPreAnalyzeResults = true;
 		
 		createDetectionDatabaseFolderIfNecessary();

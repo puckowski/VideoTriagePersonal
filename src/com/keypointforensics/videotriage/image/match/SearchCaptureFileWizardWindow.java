@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -63,7 +64,7 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 	private static final int CONTROL_GRID_LAYOUT_COLUMNS  = 1;
 	
 	private final String DATABASE_NAME;
-	private final double DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT = 10.0;
+	private final double DEFAULT_ORB_MATCH_PERCENT = 10.0;
 	
 	private CaptureFileDropList mFileDropList;
 	private JButton mSelectFilesButton;
@@ -71,14 +72,14 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 	private ScalableSimpleImagePanel mPreviewPanel;
 	private JButton mRemoveSelectedButton;
 	private JCheckBox mShowPreviewsCheckBox;
-	private JSlider mSurfSimilaritySlider;
+	private JSlider mOrbSimilaritySlider;
 	
-	private double mSurfFreeOrientedMatchPercent;
+	private double mOrbMatchPercent;
 	
 	public SearchCaptureFileWizardWindow(final String databaseName) {		
 		DATABASE_NAME = databaseName;
 		
-		mSurfFreeOrientedMatchPercent = DEFAULT_SURF_FREE_ORIENTED_MATCH_PERCENT;
+		mOrbMatchPercent = DEFAULT_ORB_MATCH_PERCENT;
 		
 		buildFrame();
 	}
@@ -139,19 +140,19 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 		
 		int sliderMin = 1;
 		int sliderMax = 100;
-		int sliderInit = (int) Math.round(mSurfFreeOrientedMatchPercent);
-		mSurfSimilaritySlider = new JSlider(JSlider.HORIZONTAL, sliderMin,
+		int sliderInit = (int) Math.round(mOrbMatchPercent);
+		mOrbSimilaritySlider = new JSlider(JSlider.HORIZONTAL, sliderMin,
 				sliderMax, sliderInit);
-		mSurfSimilaritySlider.addChangeListener(this);
+		mOrbSimilaritySlider.addChangeListener(this);
 		try {
-			mSurfSimilaritySlider.removeMouseWheelListener(mSurfSimilaritySlider.getMouseWheelListeners()[0]);
+			mOrbSimilaritySlider.removeMouseWheelListener(mOrbSimilaritySlider.getMouseWheelListeners()[0]);
 		} catch(Exception exception) {	
 
 		}
-		mSurfSimilaritySlider.setMajorTickSpacing(9);
-		mSurfSimilaritySlider.setPaintTicks(true);
-		mSurfSimilaritySlider.setPaintLabels(true);
-		contentPanel.add(mSurfSimilaritySlider);
+		mOrbSimilaritySlider.setMajorTickSpacing(9);
+		mOrbSimilaritySlider.setPaintTicks(true);
+		mOrbSimilaritySlider.setPaintLabels(true);
+		contentPanel.add(mOrbSimilaritySlider);
 		
 		mStartButton = new JButton("Start Processing");
 		mStartButton.addActionListener(this);
@@ -252,8 +253,6 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 		String capturesDirectory = getCaptureDirectoryFromDatabasePath();
 		
 		ArrayList<String> allCapturePaths = (ArrayList<String>) FileUtilsLegacy.parseDirectoryRecursiveForAll(capturesDirectory);
-		
-		SurfComparator surfComparator = new SurfComparator(false);
 		double matchPercent;
 
 		ArrayList<String> localFilesToProcess = LocalFileWizardUtils.getLocalWizardListOfFiles(mFileDropList.getFileList());
@@ -263,12 +262,27 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 		ArrayList<String> filesToReview = new ArrayList<String>();
 		
 		for(String localFileToProcess : localFilesToProcess) {
-			surfComparator.init(ImageUtils.loadBufferedImage(localFileToProcess));
-			
+			final BufferedImage image = ImageUtils.loadBufferedImage(localFileToProcess);
+
+			if (image == null) {
+				continue;
+			}
+
+			final List<OrbKeypoint> keypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(image));
+
 			for(String capturePath : allCapturePaths) {
-				matchPercent = surfComparator.compare(ImageUtils.loadBufferedImage(capturePath));
+				final BufferedImage compareImage = ImageUtils.loadBufferedImage(capturePath);
+
+				if (compareImage == null) {
+					continue;
+				}
+
+				final List<OrbKeypoint> compareKeypoints = ORBFeatureExtractor.getKeypointsForImage(ImageUtils.getGrayscaleArray(compareImage));
+
+				final List<ORBMatcher.Match> matches = ORBMatcher.match(keypoints, compareKeypoints);
+				matchPercent = ((double) matches.size() / (double) keypoints.size());
 							
-				if(matchPercent >= mSurfFreeOrientedMatchPercent) {
+				if(matchPercent >= mOrbMatchPercent) {
 					filesToReview.add(capturePath);
 				}
 				
@@ -491,8 +505,8 @@ public class SearchCaptureFileWizardWindow extends JFrame implements ActionListe
 		if(changeSource instanceof JSlider) {
 			JSlider sliderSource = (JSlider) changeSource;
 			
-			if(sliderSource == mSurfSimilaritySlider) {
-				mSurfFreeOrientedMatchPercent = sliderSource.getValue();
+			if(sliderSource == mOrbSimilaritySlider) {
+				mOrbMatchPercent = sliderSource.getValue();
 			}
 		}
 	}

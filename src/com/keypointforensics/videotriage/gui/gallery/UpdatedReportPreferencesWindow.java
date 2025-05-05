@@ -63,7 +63,7 @@ public class UpdatedReportPreferencesWindow extends JFrame implements ChangeList
 		controlsPanel.add(imageSurfSimilarityLabel);
 		int sliderMin = 1;
 		int sliderMax = 100;
-		int sliderInit = (int) videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageSurfSimilarity();
+		int sliderInit = (int) videoFalsePositiveRemoverByReferenceLegacy.getCurrentImageOrbSimilarity();
 		imageSurfSimilaritySlider = new JSlider(JSlider.HORIZONTAL, sliderMin,
 				sliderMax, sliderInit);
 		imageSurfSimilaritySlider.addChangeListener(this);
@@ -182,8 +182,8 @@ public class UpdatedReportPreferencesWindow extends JFrame implements ChangeList
 	}
 	
 	private void performResetImageSurfSimilarityAction() {
-		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageSurfSimilarity();
-		imageSurfSimilaritySlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageSurfSimilarity()); 
+		VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.resetCurrentImageOrbSimilarity();
+		imageSurfSimilaritySlider.setValue((int) VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.getCurrentImageOrbSimilarity());
 	}
 	
 	private void performResetImageSimilarityAction() {
@@ -224,7 +224,7 @@ public class UpdatedReportPreferencesWindow extends JFrame implements ChangeList
 			else if(slider == imageSurfSimilaritySlider) {
 				int imageSurfSimilarityValue = imageSurfSimilaritySlider.getValue();
 				
-				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageSurfSimilarity(imageSurfSimilarityValue);
+				VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY.setCurrentImageOrbSimilarity(imageSurfSimilarityValue);
 			}
 		}	
 	}
