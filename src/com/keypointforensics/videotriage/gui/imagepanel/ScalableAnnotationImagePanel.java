@@ -411,7 +411,7 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 				int g = (rgb >> 8) & 0xFF;
 				int b = rgb & 0xFF;
 
-				int noiseLevel = 20;
+				int noiseLevel = 30;
 				r = clamp(r + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
 				g = clamp(g + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
 				b = clamp(b + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
@@ -457,6 +457,10 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 
 				new ConvolveOp(new Kernel(KernelUtils.DEFAULT_BLUR_KERNEL_SIZE, KernelUtils.DEFAULT_BLUR_KERNEL_SIZE, blurKernel), ConvolveOp.EDGE_NO_OP, null).filter(sourceImage, destinationImage);
 			}
+
+			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
+					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
+					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
 
 			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
 					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
