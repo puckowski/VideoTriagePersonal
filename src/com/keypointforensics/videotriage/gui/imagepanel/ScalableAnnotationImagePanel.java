@@ -465,6 +465,14 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
 					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
 					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
+
+			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
+					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
+					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
+
+			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
+					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
+					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
 		}
 
 		imageCopy = imageCopy.getSubimage(borderX, borderY, mImage.getWidth(), mImage.getHeight());
