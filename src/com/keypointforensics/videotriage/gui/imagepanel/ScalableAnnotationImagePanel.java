@@ -402,94 +402,34 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 		return new Rectangle(minX, minY, maxX - minX, maxY - minY);
 	}
 
-	private void addNoise(BufferedImage image, int startX, int startY, int width, int height) {
-		for (int y = startY; y < startY + height && y < image.getHeight(); y++) {
-			for (int x = startX; x < startX + width && x < image.getWidth(); x++) {
-				int rgb = image.getRGB(x, y);
-
-				int r = (rgb >> 16) & 0xFF;
-				int g = (rgb >> 8) & 0xFF;
-				int b = rgb & 0xFF;
-
-				int noiseLevel = 30;
-				r = clamp(r + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
-				g = clamp(g + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
-				b = clamp(b + mRandom.nextInt(noiseLevel * 2 + 1) - noiseLevel);
-
-				int noisyRGB = (0xFF << 24) | (r << 16) | (g << 8) | b;
-				image.setRGB(x, y, noisyRGB);
-			}
-		}
-	}
-
-	private int clamp(int value) {
-		return Math.max(0, Math.min(255, value));
-	}
-
 	private BufferedImage getImageWithScaledRedactions() {
 		BufferedImage imageCopy = ImageUtils.copyBufferedImage(mImage);
+		int borderX = KernelUtils.DEFAULT_BLUR_KERNEL_SIZE / 2;
+		int borderY = KernelUtils.DEFAULT_BLUR_KERNEL_SIZE / 2;
+		imageCopy = ConvolveWithEdgeOp.addBorder(imageCopy, borderX, borderY);
 
-		final float[] blurKernel = KernelUtils.getBlurKernel(KernelUtils.DEFAULT_BLUR_KERNEL_SQUARED_SIZE);
+		Graphics2D g2d = imageCopy.createGraphics();
+		g2d.setColor(Color.BLACK);
+		for (Rectangle blurRect : mBlurBoxList) {
+			Rectangle exp = getExpandedRectangle(blurRect);
+			if (exp.width == 0 || exp.height == 0) continue;
 
-		final int borderX = KernelUtils.DEFAULT_BLUR_KERNEL_SIZE / 2;
-        final int borderY = KernelUtils.DEFAULT_BLUR_KERNEL_SIZE / 2;
-        imageCopy = ConvolveWithEdgeOp.addBorder(imageCopy, borderX, borderY);
-
-        List<Rectangle> copiedList = new ArrayList<Rectangle>();
-        for(Rectangle toCopy : mBlurBoxList) {
-        	copiedList.add(toCopy);
-        }
-
-		for(Rectangle blurRectangle : copiedList) {
-			final Rectangle expandedRectangle = getExpandedRectangle(blurRectangle);
-
-			if(expandedRectangle.width == 0 ||
-					expandedRectangle.height == 0) {
-				continue;
-			}
-
-			for (int convolveIndex = 0; convolveIndex < FACE_BLUR_CONVOLUTION_COUNT; ++convolveIndex) {
-				BufferedImage destinationImage = imageCopy.getSubimage(expandedRectangle.x, expandedRectangle.y,
-						expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE, expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
-				ColorModel colorModel = destinationImage.getColorModel();
-				BufferedImage sourceImage = new BufferedImage(colorModel, destinationImage.copyData(destinationImage.getRaster().createCompatibleWritableRaster()),
-					colorModel.isAlphaPremultiplied(), null).getSubimage(0, 0, destinationImage.getWidth(), destinationImage.getHeight());
-
-				new ConvolveOp(new Kernel(KernelUtils.DEFAULT_BLUR_KERNEL_SIZE, KernelUtils.DEFAULT_BLUR_KERNEL_SIZE, blurKernel), ConvolveOp.EDGE_NO_OP, null).filter(sourceImage, destinationImage);
-			}
-
-			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
-					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
-					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
-
-			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
-					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
-					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
-
-			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
-					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
-					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
-
-			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
-					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
-					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
-
-			addNoise(imageCopy, expandedRectangle.x, expandedRectangle.y,
-					expandedRectangle.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE,
-					expandedRectangle.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE);
+			// adjust for the extra kernel size if needed
+			int w = exp.width + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE;
+			int h = exp.height + KernelUtils.DEFAULT_BLUR_KERNEL_SIZE;
+			g2d.fillRect(exp.x, exp.y, w, h);
 		}
+		g2d.dispose();
 
-		imageCopy = imageCopy.getSubimage(borderX, borderY, mImage.getWidth(), mImage.getHeight());
-
-		return imageCopy;
+		return imageCopy.getSubimage(borderX, borderY, mImage.getWidth(), mImage.getHeight());
 	}
 
 	private Rectangle getExpandedRectangle(final Rectangle blurRectangle) {
 		final Rectangle expandedRectangle = new Rectangle(blurRectangle);
-		expandedRectangle.x = (int) (expandedRectangle.x - (expandedRectangle.width * 0.333));
-		expandedRectangle.y = (int) (expandedRectangle.y - (expandedRectangle.height * 0.333));
-		expandedRectangle.width = (int) (expandedRectangle.width + (expandedRectangle.width * 0.666));
-		expandedRectangle.height = (int) (expandedRectangle.height + (expandedRectangle.height * 0.666));
+		expandedRectangle.x = (int) (expandedRectangle.x - (expandedRectangle.width * 0.15));
+		expandedRectangle.y = (int) (expandedRectangle.y - (expandedRectangle.height * 0.15));
+		expandedRectangle.width = (int) (expandedRectangle.width + (expandedRectangle.width * 0.30));
+		expandedRectangle.height = (int) (expandedRectangle.height + (expandedRectangle.height * 0.30));
 
 		if (expandedRectangle.x < 0) {
 			expandedRectangle.x = 0;
