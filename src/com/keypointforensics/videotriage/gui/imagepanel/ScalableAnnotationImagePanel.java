@@ -426,10 +426,26 @@ public class ScalableAnnotationImagePanel extends SimpleImagePanel {
 
 	private Rectangle getExpandedRectangle(final Rectangle blurRectangle) {
 		final Rectangle expandedRectangle = new Rectangle(blurRectangle);
-		expandedRectangle.x = (int) (expandedRectangle.x - (expandedRectangle.width * 0.15));
-		expandedRectangle.y = (int) (expandedRectangle.y - (expandedRectangle.height * 0.15));
-		expandedRectangle.width = (int) (expandedRectangle.width + (expandedRectangle.width * 0.30));
-		expandedRectangle.height = (int) (expandedRectangle.height + (expandedRectangle.height * 0.30));
+
+		int xMod = (int) (expandedRectangle.width * 0.30);
+		int yMod = (int) (expandedRectangle.height * 0.30);
+
+		if (xMod > 50) {
+			xMod = 50;
+		} else if (xMod < 20) {
+			xMod = 20;
+		}
+
+		if (yMod > 50) {
+			yMod = 50;
+		} else if (yMod < 20) {
+			yMod = 20;
+		}
+
+		expandedRectangle.x = (expandedRectangle.x - xMod);
+		expandedRectangle.y = (expandedRectangle.y - yMod);
+		expandedRectangle.width = (expandedRectangle.width + (xMod * 2));
+		expandedRectangle.height = (expandedRectangle.height + (yMod * 2));
 
 		if (expandedRectangle.x < 0) {
 			expandedRectangle.x = 0;

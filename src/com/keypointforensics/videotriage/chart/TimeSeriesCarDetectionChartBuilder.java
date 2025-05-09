@@ -94,9 +94,9 @@ public class TimeSeriesCarDetectionChartBuilder extends VideoTriageChartBuilder 
 
 	private void closeTimeSeriesChart(boolean isReportPaginated) {
 		if(isReportPaginated == true) {
-			mChartBuilder.append("}]; Plotly.newPlot('myDiv', data, layout);");
+			mChartBuilder.append("}]; const parsedData = data[0].x.map((date, i) => ({ x: date, y: data[0].y[i] })).sort((a, b) => new Date(a.x) - new Date(b.x)); data[0].x = parsedData.map(d => d.x); data[0].y = parsedData.map(d => d.y); Plotly.newPlot('myDiv', data, layout);");
 		} else {
-			mChartBuilder.append("}]; Plotly.newPlot('myDiv" + UNIQUE_DIV_NAME + "', data, layout);");
+			mChartBuilder.append("}]; const parsedData = data[0].x.map((date, i) => ({ x: date, y: data[0].y[i] })).sort((a, b) => new Date(a.x) - new Date(b.x)); data[0].x = parsedData.map(d => d.x); data[0].y = parsedData.map(d => d.y); Plotly.newPlot('myDiv" + UNIQUE_DIV_NAME + "', data, layout);");
 		}
 	}
 
