@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.keypointforensics.videotriage.util.StringUtils;
 
-public class ReportCaptureBundle implements Comparable {
+public class ReportCaptureBundle implements Comparable<ReportCaptureBundle> {
 
 	private String CAPTURE_ABSOLUTE_PATH;
 	private String CAPTURE_EVENT_DATE;
@@ -54,8 +54,7 @@ public class ReportCaptureBundle implements Comparable {
 	}
 	
 	public void parseDateString(String dateString) {
-		if(dateString.contains("-") == true && StringUtils.countSubstringOccurrences(dateString, "-") == 4
-				&& StringUtils.countSubstringOccurrences(dateString, "_") == 1) {
+		if(dateString.contains("-") == true && StringUtils.countSubstringOccurrences(dateString, "-") == 4) {
 			int indexOfFirstDash = dateString.indexOf("-");
 			CAPTURE_MONTH = Integer.valueOf(dateString.substring(0, indexOfFirstDash));
 			dateString = dateString.substring(indexOfFirstDash + 1, dateString.length());
@@ -75,12 +74,14 @@ public class ReportCaptureBundle implements Comparable {
 			indexOfFirstDash = dateString.indexOf("-");
 			CAPTURE_MINUTE = Integer.valueOf(dateString.substring(0, indexOfFirstDash));
 			dateString = dateString.substring(indexOfFirstDash + 1, dateString.length());
-			
-			if(dateString.contains("_") == true) {
+
+			if(StringUtils.countSubstringOccurrences(dateString, "_") >= 1) {
 				indexOfFirstDash = dateString.indexOf("_");
 				CAPTURE_SECOND = Integer.valueOf(dateString.substring(0, indexOfFirstDash));
-			}
-			else {
+			} else if(StringUtils.countSubstringOccurrences(dateString, "-") == 1) {
+				indexOfFirstDash = dateString.indexOf("-");
+				CAPTURE_SECOND = Integer.valueOf(dateString.substring(0, indexOfFirstDash));
+			} else {
 				CAPTURE_SECOND = Integer.valueOf(dateString);
 			}
 		}
@@ -123,13 +124,11 @@ public class ReportCaptureBundle implements Comparable {
 	}
 	
 	@Override
-    public int compareTo(Object other) {
+    public int compareTo(final ReportCaptureBundle otherCaptureBundle) {
 		if(CAPTURE_EVENT_DATE.contains("-") == false) {
 			return 1;
 		}
-		
-        ReportCaptureBundle otherCaptureBundle = (ReportCaptureBundle) other;
-        
+
         if(getYear() < otherCaptureBundle.getYear()) {
         	return -1;
         }

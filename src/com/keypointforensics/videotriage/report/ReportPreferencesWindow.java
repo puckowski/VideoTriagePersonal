@@ -52,7 +52,7 @@ public class ReportPreferencesWindow extends JFrame implements ChangeListener, I
 	private final VideoFalsePositiveRemoverByReferenceLegacy VIDEO_FALSE_POSITIVE_REMOVER_BY_REFERENCE_LEGACY;
 	private final ImageGallery                               IMAGE_GALLERY;
 	
-	private final int GRID_LAYOUT_ROWS    = 20;
+	private final int GRID_LAYOUT_ROWS    = 21;
 	private final int GRID_LAYOUT_COLUMNS = 1;
 	
 	private JSlider    imageSurfSimilaritySlider;
@@ -65,6 +65,7 @@ public class ReportPreferencesWindow extends JFrame implements ChangeListener, I
 	private JButton    mCustomReportIconButton;
 	private JCheckBox  mMetadataPageCheckBox;
 	private JCheckBox  mStatisticsPageCheckBox;
+	private JCheckBox  mAuditLogPageCheckBox;
 	
 	private boolean mIgnoreReportFieldUpdateOnce;
 	
@@ -157,7 +158,12 @@ public class ReportPreferencesWindow extends JFrame implements ChangeListener, I
 		mMetadataPageCheckBox.setSelected(IMAGE_GALLERY.getMetadataPageEnabled());
 		mMetadataPageCheckBox.addItemListener(this);
 		controlsPanel.add(mMetadataPageCheckBox);
-		
+
+		mAuditLogPageCheckBox = new JCheckBox("Create Audit Log Page");
+		mAuditLogPageCheckBox.setSelected(IMAGE_GALLERY.getAuditLogPageEnabled());
+		mAuditLogPageCheckBox.addItemListener(this);
+		controlsPanel.add(mAuditLogPageCheckBox);
+
 		mReportIconCheckBox = new JCheckBox("Report Icon Enabled");
 		mReportIconCheckBox.setSelected(IMAGE_GALLERY.getReportIconEnabled());
 		mReportIconCheckBox.addItemListener(this);
@@ -322,6 +328,9 @@ public class ReportPreferencesWindow extends JFrame implements ChangeListener, I
 			}
 			else if(checkBox == mStatisticsPageCheckBox) {
 				IMAGE_GALLERY.setStatisticsPageEnabled(mStatisticsPageCheckBox.isSelected());
+			}
+			else if(checkBox == mAuditLogPageCheckBox) {
+				IMAGE_GALLERY.setAuditLogPageEnabled(mAuditLogPageCheckBox.isSelected());
 			}
 		}
 	}

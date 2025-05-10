@@ -18,15 +18,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
@@ -56,14 +51,7 @@ import com.keypointforensics.videotriage.legacy.FileUtilsLegacy;
 import com.keypointforensics.videotriage.legacy.VideoFalsePositiveBundleLegacy;
 import com.keypointforensics.videotriage.list.SortedList;
 import com.keypointforensics.videotriage.progress.ProgressBundle;
-import com.keypointforensics.videotriage.report.CarExtractPageGenerator;
-import com.keypointforensics.videotriage.report.FaceExtractPageGenerator;
-import com.keypointforensics.videotriage.report.LicensePlateExtractPageGenerator;
-import com.keypointforensics.videotriage.report.NotePageGenerator;
-import com.keypointforensics.videotriage.report.NoteworthyFramePageGenerator;
-import com.keypointforensics.videotriage.report.PedestrianExtractPageGenerator;
-import com.keypointforensics.videotriage.report.ReportCaptureBundle;
-import com.keypointforensics.videotriage.report.VideoMetadataPageGenerator;
+import com.keypointforensics.videotriage.report.*;
 import com.keypointforensics.videotriage.report.stats.StatisticsPageGenerator;
 import com.keypointforensics.videotriage.util.FileUtils;
 import com.keypointforensics.videotriage.util.ProgressUtils;
@@ -82,6 +70,7 @@ public class HtmlReportGenerator {
 	private final String RELATIVE_CHART_FOLDER_PATH_ROOT           = "charts";
 	private final String RELATIVE_STATISTICS_FOLDER_PATH_ROOT      = "statistics";
 	private final String RELATIVE_NOTES_FOLDER_PATH_ROOT           = "notes";
+	private final String RELATIVE_AUDIT_LOG_FOLDER_PATH_ROOT       = "audit";
 	
 	private final int DEFAULT_REPORT_PAGE_COUNT  = 40;
 	private final int DEFAULT_PAGE_ITEMS_PER_ROW = 25;
@@ -109,6 +98,7 @@ public class HtmlReportGenerator {
 	private int mCurrentRowIndex;
 	private int mOriginalKeypointCount;
 	private boolean mHasCharts;
+	private boolean mHasAuditLog;
 	private boolean mHasEvidenceListing;
 	private boolean mHasEnhancedEvidenceListing;
 	private String mReportPageHeader;
@@ -138,7 +128,7 @@ public class HtmlReportGenerator {
 			final VideoFalsePositiveBundleLegacy falsePositiveBundle, final BlobContextList blobContextList,
 			final boolean reportIconEnabled, final boolean customReportIconEnabled, final File customIconFile,
 			final boolean reportPaginationEnabled, final ReportChartSettings reportChartSettings,
-			final boolean hasVideoMetadataPage, final boolean hasStatisticsPage) {
+			final boolean hasVideoMetadataPage, final boolean hasStatisticsPage, final boolean hasAuditLog) {
 		BLOB_CONTEXT_LIST          = blobContextList;
 		REPORT_ICON_ENABLED        = reportIconEnabled;
 		CUSTOM_REPORT_ICON_ENABLED = customReportIconEnabled;
@@ -155,6 +145,7 @@ public class HtmlReportGenerator {
 		mExtractCountForVideoMap = new HashMap<String, Integer>();
 		mCurrentRowIndex = 1;
 		mHasCharts = REPORT_CHART_SETTINGS.hasRequestedCharts();
+		mHasAuditLog = hasAuditLog;
 		mHasVideoMetadataPage = hasVideoMetadataPage;
 		
 		mGregorianCalendar = new GregorianCalendar();
@@ -205,6 +196,13 @@ public class HtmlReportGenerator {
 	private void createNotesFolder() {
 		File notesFolder = new File(mReportFolderName + RELATIVE_NOTES_FOLDER_PATH_ROOT);
 		notesFolder.mkdir();
+	}
+	//
+
+	//
+	private void createAuditLogFolder() {
+		File auditLogFolder = new File(mReportFolderName + RELATIVE_AUDIT_LOG_FOLDER_PATH_ROOT);
+		auditLogFolder.mkdir();
 	}
 	//
 	
@@ -702,7 +700,28 @@ public class HtmlReportGenerator {
 			}
 		}
 		//
-		
+
+		if (mHasAuditLog == true) {
+			AuditLogPageGenerator mAuditLogPageGenerator = new AuditLogPageGenerator();
+			mAuditLogPageGenerator.setReportRoot(mReportFilenameRoot);
+			mAuditLogPageGenerator.setReportPageHeader(mReportPageHeader);
+
+			if (REPORT_PAGINATION_ENABLED == true) {
+				createAuditLogFolder();
+				mAuditLogPageGenerator.setAuditLogFolderPath(mReportFolderName + RELATIVE_AUDIT_LOG_FOLDER_PATH_ROOT + File.separator);
+				mAuditLogPageGenerator.buildPage();
+
+				mBuilder.append("<table class=\"table-fill\"><thead><tr><th class=\"text-left\">Audit Log</th></tr></thead><tbody class=\"table-hover\">");
+				mBuilder.append("<tr class=\"outer\"><td class=\"text-left\"><a href=\"file:///");
+				mBuilder.append(mAuditLogPageGenerator.getAuditLogPageName());
+				mBuilder.append("\">See Log</a></td></tr></tbody></table><br>");
+			} else {
+				mAuditLogPageGenerator.buildEmbeddablePage();
+
+				mBuilder.append(mAuditLogPageGenerator.getEmbeddablePage());
+			}
+		}
+
 		//
 		if(mHasCharts == true) {
 			if(REPORT_CHART_SETTINGS.containsChartBuilder(EVideoTriageChart.BLOB_TRACKING_SCATTER_STANDARD) == true ||
@@ -930,8 +949,11 @@ public class HtmlReportGenerator {
 		//
 		
 		//
-		for(int i = 0; i < mCaptures.size(); ++i) {
-			addCaptureRowChartEvent(mCaptures.get(i));
+		final List<ReportCaptureBundle> sortedCaptures = mCaptures.stream()
+				.sorted(Comparator.naturalOrder())
+				.toList();
+		for(int i = 0; i < sortedCaptures.size(); ++i) {
+			addCaptureRowChartEvent(sortedCaptures.get(i));
 		}
 		
 		if(mHasCharts == true) {

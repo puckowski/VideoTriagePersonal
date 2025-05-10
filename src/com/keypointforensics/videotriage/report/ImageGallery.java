@@ -58,7 +58,8 @@ public class ImageGallery extends BaseImageGallery {
 	private static final boolean DEFAULT_REPORT_PAGINATION_ENABLED  = true;
 	private static final boolean DEFAULT_METADATA_PAGE_ENABLED      = false;
 	private static final boolean DEFAULT_STATISTICS_PAGE_ENABLED    = false;
-	
+	private static final boolean DEFAULT_AUDIT_LOG_PAGE_ENABLED     = false;
+
 	private final BlobContextList BLOB_CONTEXT_LIST;
 	private final String CASE_NAME;
 	
@@ -90,6 +91,7 @@ public class ImageGallery extends BaseImageGallery {
 	private boolean mReportPaginationEnabled;
 	private boolean mMetadataPageEnabled;
 	private boolean mStatisticsPageEnabled;
+	private boolean mAuditLogPageEnabled;
 	
 	private ReportChartSettings mReportChartSettings;
 	
@@ -108,6 +110,7 @@ public class ImageGallery extends BaseImageGallery {
 		mReportPaginationEnabled = DEFAULT_REPORT_PAGINATION_ENABLED;
 		mMetadataPageEnabled     = DEFAULT_METADATA_PAGE_ENABLED;
 		mStatisticsPageEnabled   = DEFAULT_STATISTICS_PAGE_ENABLED;
+		mAuditLogPageEnabled     = DEFAULT_AUDIT_LOG_PAGE_ENABLED;
 		
 		String contextFilename = CaseMetadataWriter.getContextFilenameFromDatabaseName(caseName);
 		ArrayList<String> enhancedVideoFiles = CaseMetadataWriter.getVideoSourceListing(contextFilename);
@@ -122,7 +125,13 @@ public class ImageGallery extends BaseImageGallery {
 	public String getCapturePath() {
 		return path;
 	}
-	
+
+	public boolean getAuditLogPageEnabled() { return mAuditLogPageEnabled; }
+
+	public void setAuditLogPageEnabled(final boolean newAuditLogPageEnabled) {
+		mAuditLogPageEnabled = newAuditLogPageEnabled;
+	}
+
 	public boolean getStatisticsPageEnabled() {
 		return mStatisticsPageEnabled;
 	}
@@ -856,7 +865,7 @@ public class ImageGallery extends BaseImageGallery {
 				mFalsePositiveRemover.getFalsePositiveBundle(), BLOB_CONTEXT_LIST,
 				mReportIconEnabled, mCustomReportIconEnabled, mCustomReportIconFile,
 				mReportPaginationEnabled, mReportChartSettings, mMetadataPageEnabled,
-				mStatisticsPageEnabled);
+				mStatisticsPageEnabled, mAuditLogPageEnabled);
 		String reportFolderName = htmlReportGenerator.createRootPage();
 		try {
 			Desktop.getDesktop().open(new File(reportFolderName));
